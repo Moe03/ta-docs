@@ -1,0 +1,4282 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI",
+    "description": "API for agents",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://eu-vg-edge.moeaymandev.workers.dev"
+    },
+
+    {
+      "url": "https://na-vg-edge.moeaymandev.workers.dev"
+    },
+    {
+      "url": "https://eu-voiceglow-runtime-vbmbkqccuq-ey.a.run.app/"
+    },
+    {
+      "url": "https://na-runtime.voiceglow.org"
+    }
+  ],
+  "paths": {
+    "/plants": {
+      "get": {
+        "description": "Returns all plants from the system that the user has access to",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plant response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Plant"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new plant in the store",
+        "requestBody": {
+          "description": "Plant to add to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPlant"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "plant response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Plant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plants/{id}": {
+      "delete": {
+        "description": "Deletes a single plant based on the ID supplied",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of plant to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Plant deleted",
+            "content": {}
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}": {
+      "get": {
+        "description": "Returns agent data",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Edits/Creates a new agent in the system",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to create/edit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New agent data to create/edit",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agent"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent created successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Agent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/agents/{agent_id}/usage": {
+      "post": {
+        "operationId": "getAgentUsage",
+        "summary": "Get an agent's usage",
+        "tags": ["agents"],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "number"
+                      },
+                      "end": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditsConsumed": {
+                      "type": "number"
+                    },
+                    "metrics": {}
+                  },
+                  "required": ["creditsConsumed"],
+                  "additionalProperties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agent_id}/interact/{user_id}": {
+      "post": {
+        "description": "Interact with an agent (VF/VG)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to interact with",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user to interact with",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Interaction data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentInteractBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interaction successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AgentInteractRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agent_id}/interact/{user_id}/state": {
+      "post": {
+        "description": "Configure the chat history state of the conversation and the associated metadata (name, email, etc)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to interact with",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user to interact with",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Interaction data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentStateInteractBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interaction successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AgentInteractRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/kb": {
+      "get": {
+        "description": "Returns agent knowledge base documents",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve KB documents from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent KB documents retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent KB documents retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Array of KB Docs",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AgentKBDocGET"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/kb/{doc_id}": {
+      "get": {
+        "description": "Returns the specified document from the agent's VF/VG KB",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve the document from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "description": "The ID of the document to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleKBModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "<strong>(VG agents only)</strong> Adds a new document to the agent's knowledge base, if your agent is built with VF use [Voiceflow's API instead](https://developer.voiceflow.com/reference/project)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to add the document to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "description": "The ID of the document to add",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Document to add to the agent's KB",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentKBDoc"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Document added successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "<strong>(VG agents only)</strong> Deletes a document from the agent's knowledge base, if your agent is built with VF use [Voiceflow's API instead](https://developer.voiceflow.com/reference/project)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to delete the document from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "description": "The ID of the document to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Document deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/kb/search": {
+      "post": {
+        "description": "<strong>(VG Agents Only)</strong> Searches the agent's knowledge base",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to search the KB of",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Search query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "The search query"
+                  },
+                  "chunks": {
+                    "type": "number",
+                    "description": "The maximum number of results to return"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Search successful"
+                    },
+                    "data": {
+                      "description": "Array of KB Docs",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "similarity": {
+                            "type": "number",
+                            "description": "The similarity of the document to the search query"
+                          },
+                          "doc": {
+                            "$ref": "#/components/schemas/AgentKBDoc"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/kb/vector_search": {
+      "post": {
+        "description": "<strong>(VG Agents Only)</strong> Searches the agent's knowledge base using vectors",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to search the KB of",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Search body object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/VectorSearchData"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Search successful"
+                    },
+                    "data": {
+                      "description": "Array of objects with the relevant payloads and optionally the vector",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/VectorModel"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/stats/kb": {
+      "get": {
+        "description": "<strong>(VG Agents Only)</strong> Returns agent knowledge base statistics",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve KB statistics from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent KB statistics retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent KB statistics retrieved successfully"
+                    },
+                    "data": {
+                      "description": "KB statistics",
+                      "type": "object",
+                      "properties": {
+                        "charCount": {
+                          "type": "number",
+                          "description": "Total number of characters in the KB"
+                        },
+                        "docsCount": {
+                          "type": "number",
+                          "description": "Total number of docs in the KB"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/convos": {
+      "get": {
+        "description": "Returns agent conversations (metadata only)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve its conversations",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of the results to return, default is 1, query per page is 20",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent conversations retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent conversations retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Array of conversations objects",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WidgetConvoModel"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/convos/export": {
+      "get": {
+        "description": "Exports agent conversations",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to export its conversations",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of the results to return, default is 1, query per page is 20",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "convo_ids",
+            "in": "query",
+            "description": "The ids of the conversations to export (comma separated)\n #### Example:\n ```test_id_1,test_id_2,test_id_3```",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent conversations exported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent conversations exported successfully"
+                    },
+                    "data": {
+                      "description": "Array of conversations objects",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "metadata": {
+                            "description": "Conversation metadata",
+                            "$ref": "#/components/schemas/WidgetConvoModel"
+                          },
+                          "turns": {
+                            "description": "Array of turns in the conversation between bot - human.",
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "from": {
+                                  "description": "Message sender whether it's a human or a bot",
+                                  "type": "string",
+                                  "enum": ["human", "bot"]
+                                },
+                                "messages": {
+                                  "description": "Array containing the messages of the turn with its type, payload and timestamp.",
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "#/components/schemas/SimpleChatMessage"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/convos/{convo_id}": {
+      "post": {
+        "description": "Add a conversation to the agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to add the conversation to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convo_id",
+            "in": "path",
+            "description": "The ID of the conversation to add",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Conversation to add to the agent",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WidgetConvoModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversation added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Conversation added successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a conversation from the agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to delete the conversation from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convo_id",
+            "in": "path",
+            "description": "The ID of the conversation to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversation deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Conversation deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/analytics": {
+      "get": {
+        "description": "Returns agent analytics data with start and stop timestamps",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to retrieve analytics from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_ts",
+            "in": "query",
+            "description": "the start unix timestamb of the analytics, by default 30 days ago.",
+            "schema": {
+              "type": "number"
+            },
+            "required": false
+          },
+          {
+            "name": "stop_ts",
+            "in": "query",
+            "description": "the end unix timestamb of the analytics, by default now.",
+            "schema": {
+              "type": "number"
+            },
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent analytics retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent analytics retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Analytics data",
+                      "type": "object",
+                      "properties": {
+                        "loads": {
+                          "type": "array",
+                          "description": "Loads/Web traffic analytics",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticLoadModel"
+                          }
+                        },
+                        "convos": {
+                          "type": "array",
+                          "description": "Conversations analytics",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticLoadModel"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes ENTIRE analytics for specified agent (Hard reset)",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to delete analytics from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent analytics deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent analytics deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agents/{agent_id}/analytics/{convo_id}": {
+      "get": {
+        "description": "Returns analytics for a conversation of an agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convo_id",
+            "in": "path",
+            "description": "The ID of the conversation to retrieve analytics from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Analytics retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Analytics data",
+                      "type": "object",
+                      "$ref": "#/components/schemas/AnalyticLoadModel"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Add analytics to a conversation for an agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to add the analytics to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convo_id",
+            "in": "path",
+            "description": "The ID of the conversation associated with the analytics to be added",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Analytics to add to the agent",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticLoadModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Analytics added successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes analytics from a conversation for an agent",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "description": "The ID of the agent to delete the analytics from",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convo_id",
+            "in": "path",
+            "description": "The ID of the conversation associated with the analytics to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAgents": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics for a conversation deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Analytics associated with {convo_id} deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/workspaces/{uid}/usage": {
+      "post": {
+        "operationId": "getUsage",
+        "summary": "Get a workspace usage",
+        "tags": ["Workspaces"],
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "logsPage": {
+                    "type": "number"
+                  },
+                  "range": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "description": "Unix timestamp referencing period start",
+                        "type": "number"
+                      },
+                      "end": {
+                        "description": "Unix timestamp referencing period end",
+                        "type": "number"
+                      }
+                    },
+                    "required": ["start", "end"],
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/workspaces": {
+      "get": {
+        "description": "Returns workspace associated with the bearer token",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspaces retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Workspaces retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Workspace associated with bearer token",
+                      "type": "object",
+                      "$ref": "#/components/schemas/WorkspaceModelGET"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates/Edit a workspace",
+        "requestBody": {
+          "description": "Workspace to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspace created/edit succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Workspace created successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the workspace associated with the bearer token, only works if the workspace doesn't have any load tokens and hasn't paid and is not the main workspace associated with an account.",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspace deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Workspace deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/agencies": {
+      "get": {
+        "description": "Returns the agency associated with the workspace",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agency retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agencies retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Agency object",
+                      "type": "object",
+                      "$ref": "#/components/schemas/AgencyModelGet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates/Edit an agency",
+        "requestBody": {
+          "description": "New agency data to create/edit",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgencyModel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agency created/edited succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agency created/edited successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the agency associated with the workspace",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agency deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agency deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/clients": {
+      "get": {
+        "description": "Returns all clients associated with the bearer token",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Clients retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Clients retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Array of client objects",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClientModelGet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Creates a new client",
+        "requestBody": {
+          "description": "Client to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModelPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client created succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Client created successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/clients/{client_id}": {
+      "get": {
+        "description": "Returns a client specified belonging to a workspace",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "The ID of the client to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Client retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Client data",
+                      "type": "object",
+                      "$ref": "#/components/schemas/ClientModelGet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Updates a client specified belonging to a workspace",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "The ID of the client to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Client to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientModelPost"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client updated succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Client updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes a client with specified ID",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "The ID of the client to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Client deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/clients/{client_id}/email": {
+      "post": {
+        "description": "Sends an email to the client",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "description": "The ID of the client to send the email to",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Email a client on behalf of an agency <strong>required valid setup of the email on your agency page.</strong>",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "to": {
+                    "type": "string",
+                    "example": "Recipient of the email"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "example": "Subject of the email"
+                  },
+                  "html": {
+                    "type": "string",
+                    "example": "<p>HTML content of the email</p>"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email sent succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email sent successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/orgs": {
+      "get": {
+        "description": "Returns all organizations associated with the bearer token",
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organizations retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organizations retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Array of organization objects",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OrgClientModelGet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Creates a new organization",
+        "requestBody": {
+          "description": "Organization to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrgClientModelPost"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization created succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization created successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/orgs/{org_id}": {
+      "get": {
+        "description": "Returns a single organization",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "description": "The ID of the organization to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization retrieved successfully"
+                    },
+                    "data": {
+                      "description": "Organization data",
+                      "type": "object",
+                      "$ref": "#/components/schemas/OrgClientModelGet"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Updates an organization",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "description": "The ID of the organization to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New organization data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrgClientModelPost"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization updated succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes an organization",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "description": "The ID of the organization to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerWorkspace": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoauthError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Plant": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the plant",
+            "type": "string"
+          },
+          "tag": {
+            "description": "Tag to specify the type",
+            "type": "string"
+          }
+        }
+      },
+      "NewPlant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Plant"
+          },
+          {
+            "required": ["id"],
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Identification number of the plant",
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "required": ["success", "message"],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "Unexpected error/Bad request"
+          }
+        }
+      },
+      "NoauthError": {
+        "required": ["success", "message"],
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "Unauthorized to access this resource."
+          }
+        }
+      },
+      "Agent": {
+        "required": ["ID", "title", "agentPlatform"],
+        "type": "object",
+        "properties": {
+          "agentPlatform": {
+            "description": "Platform of the Agent",
+            "enum": ["vf", "vg"],
+            "type": "string"
+          },
+          "title": {
+            "description": "Agent title/name",
+            "type": "string"
+          },
+          "description": {
+            "description": "Agent description",
+            "type": "string"
+          },
+          "VF_DIALOGUE_API_KEY": {
+            "description": "For VF agents only -- the API key for the agent",
+            "type": "string"
+          },
+          "VF_PROJECT_API_KEY": {
+            "description": "For VF agents only -- the Project API key",
+            "type": "string"
+          },
+          "theme": {
+            "description": "Predefined themes: 'blue-light' | 'purple-light' | 'blue-dark' | 'purple-dark' | 'custom-light' | 'custom-dark' // custom themes used along customThemeJSONString",
+            "type": "string"
+          },
+          "customThemeJSONString": {
+            "type": "object",
+            "description": "### MUST JSON.stringify() this object before passing it to the API.\n Custom theme object for the agent",
+            "$ref": "#/components/schemas/CustomTheme"
+          },
+          "roundedImageURL": {
+            "description": "Widget popup launch image",
+            "type": "string"
+          },
+          "avatarImageUrl": {
+            "description": "Web widget chat avatar image url",
+            "type": "string"
+          },
+          "headerImageUrl": {
+            "description": "Web widget chat header image url",
+            "type": "string"
+          },
+          "bannerImageUrl": {
+            "description": "Web widget chat banner image url",
+            "type": "string"
+          },
+          "chatBgURL": {
+            "description": "Chatbox background image",
+            "type": "string"
+          },
+          "fontFamily": {
+            "description": "Google font family name [Browse fonts](https://fonts.google.com)",
+            "type": "string"
+          },
+          "branding": {
+            "description": "Branding text under the chatbox",
+            "type": "string"
+          },
+          "lang": {
+            "description": "Language of the agent (ISO 639-1), [Learn more](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)",
+            "type": "string"
+          },
+          "UIhandoffdescription": {
+            "description": "Widget handoff title",
+            "type": "string"
+          },
+          "UIhandoffSubdescription": {
+            "description": "Widget handoff subtitle",
+            "type": "string"
+          },
+          "buttonsLayout": {
+            "enum": ["horizontal", "vertical"],
+            "description": "Layout of the buttons in the chatbox",
+            "type": "string"
+          },
+          "ADVANCED_customCSS": {
+            "description": "(Advanced) Custom CSS for the web widget",
+            "type": "string"
+          },
+          "whatsappToken": {
+            "description": "WA access token for sending messages",
+            "type": "string"
+          },
+          "whatsappNumberId": {
+            "description": "WA number_id connected to the agent",
+            "type": "string"
+          },
+          "whatsappBusniessId": {
+            "description": "WA Business ID connected to the agent",
+            "type": "string"
+          },
+          "webhookUrl": {
+            "description": "Discord webhook URL",
+            "type": "string"
+          },
+          "gcloudPrivateKey": {
+            "description": "Google chat integration -- Service account private_key for sending messages",
+            "type": "string"
+          },
+          "gcloudClientEmail": {
+            "description": "Google chat integration -- Service account client_email for sending messages",
+            "type": "string"
+          },
+          "vg_initMessages": {
+            "description": "VG agents specific -- Array of strings for initial messages",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vg_systemPrompt": {
+            "description": "VG agents specific -- prompt for the agent",
+            "type": "string"
+          },
+          "vg_temperature": {
+            "description": "Temperature of the LLM",
+            "type": "number"
+          },
+          "vg_defaultModel": {
+            "type": "string",
+            "description": "model_id to use to power the agent",
+            "enum": [
+              "gpt-3.5-turbo-0125",
+              "gpt-4-1106-preview",
+              "llama2-70b-4096",
+              "mixtral-8x7b-32768",
+              "gemma-7b-it"
+            ]
+          },
+          "vg_maxTokens": {
+            "description": "Max tokens for the LLM to generate per interaction (message to the AI)",
+            "type": "number"
+          },
+          "vg_kbDefaultDimension": {
+            "description": "(Advanced) Dimensions of the vector store for the agent",
+            "type": "number"
+          },
+          "vg_kbTopChunks": {
+            "description": "(Advanced) Max chunks retrieved as context from the vector store for the agent",
+            "type": "number"
+          },
+          "vg_enableUIEngine": {
+            "description": "Enable or disable the AI UI engine for the agent (Makes the AI generate UI elements on its on for the web widget)",
+            "type": "boolean"
+          },
+          "SECRET_API_KEY": {
+            "description": "Agent secret API key to control kb, conversations, etc",
+            "type": "string"
+          },
+          "messageDelayMS": {
+            "description": "Delay between messages in milliseconds",
+            "type": "number"
+          },
+          "proactiveMessage": {
+            "description": "Popup proactive message",
+            "type": "string"
+          },
+          "recordChatHistory": {
+            "description": "Record chat history on VG dashboard or not",
+            "type": "boolean"
+          },
+          "disableSmoothScroll": {
+            "description": "Disable scroll on new messages",
+            "type": "boolean"
+          },
+          "autoStartWidget": {
+            "description": "Autostart the widget on page load (Consumes an interaction for VF agents)",
+            "type": "boolean"
+          },
+          "listenForUrlChanges": {
+            "description": "VF agents specific -- Listen for URL changes and send an intent to Voiceflow when the URL changes",
+            "type": "boolean"
+          },
+          "chatForget": {
+            "description": "Forget chathistory on widget close",
+            "type": "boolean"
+          },
+          "enableAudioSupport": {
+            "description": "Enable Mic button for voice input",
+            "type": "boolean"
+          },
+          "enableAITranslate": {
+            "description": "VF agents specific -- Enable AI translation of the response coming from VF",
+            "type": "boolean"
+          },
+          "disableNoReplyListener": {
+            "description": "VF agents specific -- Disable no reply listener",
+            "type": "boolean"
+          },
+          "alwaysShowHandoff": {
+            "description": "Always show handoff popup even if no agents are online",
+            "type": "boolean"
+          },
+          "fixedHandoffPopup": {
+            "description": "Make the handoff popup fixed instead of disappearing on scroll",
+            "type": "boolean"
+          },
+          "smartInit": {
+            "description": "VF agents specific -- Make the AI reply to the first message on channels like WA, discord, etc by sending 2 requests on initilization instead of launching the flow only.",
+            "type": "boolean"
+          },
+          "showHandoffEvenIfOffline": {
+            "description": "Always show handoff popup even if no agents are online",
+            "type": "boolean"
+          },
+          "enableQuickFileUpload": {
+            "description": "Enable quick upload button for web widget",
+            "type": "boolean"
+          }
+        }
+      },
+      "CustomTheme": {
+        "type": "object",
+        "required": ["themeType", "primary", "nineColorPallet"],
+        "properties": {
+          "themeType": {
+            "type": "string",
+            "enum": ["dark", "light"],
+            "description": "Theme type"
+          },
+          "primary": {
+            "type": "string",
+            "description": "Primary hex color for the theme, example: '#000000'"
+          },
+          "nineColorPallet": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "description": "Array length of 9 where every item is an array of HSL values: [50, 50, 50]"
+          }
+        }
+      },
+      "AgentKBDoc": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the document",
+            "type": "string"
+          },
+          "content": {
+            "description": "Content of the document",
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "description": "Description of the document",
+                "type": "string"
+              }
+            }
+          },
+          "tags": {
+            "description": "Tags of the document",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceType": {
+            "description": "Type of the document",
+            "type": "string",
+            "enum": ["doc", "url"]
+          },
+          "status": {
+            "description": "Status of the document in the KB",
+            "type": "string",
+            "enum": ["ERROR", "SUCCESS", "PENDING", "INITIALIZED"]
+          },
+          "ts": {
+            "description": "Timestamp of the document",
+            "type": "number"
+          }
+        },
+        "required": ["status"]
+      },
+      "AgentKBDocGET": {
+        "allOf": [
+          {
+            "required": ["ID"],
+            "type": "object",
+            "properties": {
+              "ID": {
+                "description": "ID of the document",
+                "type": "string"
+              }
+            }
+          },
+          {
+            "properties": {
+              "ts": {
+                "description": "Timestamp of the document",
+                "type": "number"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/AgentKBDoc"
+          }
+        ]
+      },
+      "ChatMessage": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Sender of the message.",
+            "enum": ["human", "bot"]
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the message.",
+            "enum": [
+              "launch",
+              "text",
+              "choice",
+              "MultiSelect",
+              "cardV2",
+              "carousel",
+              "visual",
+              "GetBrowserData",
+              "Embed",
+              "iFrame",
+              "FileUpload",
+              "GoogleForm",
+              "EmailForm",
+              "SetConvoData",
+              "VoiceNote",
+              "SetRuntime",
+              "no-reply",
+              "VGVF_Channel",
+              "VFVG_Channel",
+              "VG_Response",
+              "knowledgeBase",
+              "jsx",
+              "info:default",
+              "info:success",
+              "info:danger",
+              "info:primary",
+              "end"
+            ]
+          },
+          "item": {
+            "type": "object",
+            "description": "Additional data specific to the message type."
+          },
+          "delay": {
+            "type": "number",
+            "description": "Delay in milliseconds before sending the message."
+          },
+          "ts": {
+            "type": "number",
+            "description": "Timestamp of the message."
+          }
+        },
+        "required": ["from", "type", "item", "ts"]
+      },
+      "SimpleChatMessage": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of the message.",
+            "enum": [
+              "launch",
+              "text",
+              "choice",
+              "MultiSelect",
+              "cardV2",
+              "carousel",
+              "visual",
+              "GetBrowserData",
+              "Embed",
+              "iFrame",
+              "FileUpload",
+              "GoogleForm",
+              "EmailForm",
+              "SetConvoData",
+              "VoiceNote",
+              "SetRuntime",
+              "no-reply",
+              "VGVF_Channel",
+              "VFVG_Channel",
+              "VG_Response",
+              "knowledgeBase",
+              "jsx",
+              "info:default",
+              "info:success",
+              "info:danger",
+              "info:primary",
+              "end"
+            ]
+          },
+          "payload": {
+            "type": "object",
+            "description": "Relevant data of the message according to the message type."
+          },
+          "ts": {
+            "type": "string",
+            "description": "Timestamp of the message."
+          }
+        }
+      },
+      "MessageOriginType": {
+        "type": "string",
+        "description": "Channel origin of the message.",
+        "enum": ["web-chat", "whatsapp", "discord", "gb-chat"]
+      },
+      "WidgetConvoModel": {
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string",
+            "description": "ID of the conversation."
+          },
+          "userID": {
+            "type": "string",
+            "description": "User ID."
+          },
+          "userName": {
+            "type": "string",
+            "description": "User's name."
+          },
+          "userEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address."
+          },
+          "userImage": {
+            "type": "string",
+            "description": "URL to user's profile image."
+          },
+          "userPhone": {
+            "type": "string",
+            "description": "User's phone number."
+          },
+          "userBrowser": {
+            "type": "string",
+            "description": "User's browser information."
+          },
+          "userProfilePic": {
+            "type": "string",
+            "description": "URL to user's profile picture."
+          },
+          "origin": {
+            "description": "Channel origin of the message.",
+            "$ref": "#/components/schemas/MessageOriginType"
+          },
+          "messagesNum": {
+            "type": "integer",
+            "description": "Number of messages in the conversation."
+          },
+          "interactionsNum": {
+            "type": "integer",
+            "description": "Number of interactions in the conversation."
+          },
+          "ts": {
+            "type": "number",
+            "description": "Timestamp of the conversation."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags associated with the conversation."
+          },
+          "convoTimeSeconds": {
+            "type": "integer",
+            "description": "Duration of the conversation in seconds."
+          },
+          "firstMessageTS": {
+            "type": "number",
+            "description": "Timestamp of the first message."
+          },
+          "lastMessageTS": {
+            "type": "number",
+            "description": "Timestamp of the last message."
+          },
+          "userPlatform": {
+            "type": "string",
+            "description": "User's platform (e.g., mobile, desktop)."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "requested_chat",
+              "human-chatting",
+              "ai-chatting",
+              "ended_chat"
+            ],
+            "description": "Type of action to perform, launch type doesn't require a payload"
+          },
+          "chatAssignedTo": {
+            "type": "string",
+            "description": "ID of the human agent (client_id) assigned to the conversation."
+          },
+          "lastModified": {
+            "type": "number",
+            "description": "Timestamp of the last modification."
+          },
+          "sessionsNum": {
+            "type": "integer",
+            "description": "Number of sessions in the conversation."
+          }
+        }
+      },
+      "TurnItem": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Sender of the turn."
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "description": "Messages exchanged in this turn."
+          }
+        }
+      },
+      "AgentStateInteractBody": {
+        "type": "object",
+        "properties": {
+          "turns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TurnItem"
+            },
+            "description": "Completely change the entire conversation state. (optional)"
+          },
+          "delete": {
+            "type": "object",
+            "description": "Messages to delete with the provided ids. (optional)",
+            "properties": {
+              "mids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Message IDs to delete."
+              }
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Metadata related to the conversation transcript.",
+            "$ref": "#/components/schemas/WidgetConvoModel"
+          }
+        }
+      },
+      "AgentInteractBody": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["text", "launch"],
+                "description": "Type of action to perform, launch type doesn't require a payload"
+              },
+              "payload": {
+                "type": "string",
+                "description": "Payload data for the action."
+              }
+            }
+          },
+          "appendMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "description": "Messages to append to the conversation."
+          },
+          "transcriptMetadata": {
+            "description": "Metadata related to the conversation transcript.",
+            "$ref": "#/components/schemas/WidgetConvoModel"
+          },
+          "variables": {
+            "type": "object",
+            "description": "Variables to inject to VF."
+          },
+          "origin": {
+            "$ref": "#/components/schemas/MessageOriginType",
+            "description": "Channel to send message through."
+          }
+        }
+      },
+      "TurnProps": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "enum": ["bot", "human"],
+            "description": "The sender of the turn, whether from a bot or a human."
+          },
+          "messages": {
+            "$ref": "#/components/schemas/ChatMessage",
+            "description": "Messages exchanged in this turn."
+          },
+          "ts": {
+            "type": "number",
+            "description": "Timestamp of the turn."
+          }
+        },
+        "required": ["from", "messages"]
+      },
+      "AgentInteractRes": {
+        "type": "object",
+        "properties": {
+          "platformName": {
+            "type": "string",
+            "enum": ["vf", "vg"],
+            "description": "Name of the platform (virtual flow or TIXAE Agents)."
+          },
+          "chatState": {
+            "type": "object",
+            "description": "State of the chat."
+          },
+          "actionMessages": {
+            "type": "array",
+            "items": {},
+            "description": "Messages related to actions."
+          },
+          "turns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TurnProps"
+            },
+            "description": "Turns in the conversation."
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Indicates if the interaction was successful."
+          },
+          "appError": {
+            "type": "string",
+            "description": "Error message related to the app."
+          },
+          "message": {
+            "type": "string",
+            "description": "General message."
+          },
+          "agentData": {
+            "$ref": "#/components/schemas/Agent",
+            "description": "Data related to the agent in the conversation."
+          },
+          "origin": {
+            "$ref": "#/components/schemas/MessageOriginType",
+            "description": "Origin of the message."
+          },
+          "userID": {
+            "type": "string",
+            "description": "User/Conversation ID."
+          },
+          "agentID": {
+            "type": "string",
+            "description": "Agent ID."
+          },
+          "oldTurns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TurnProps"
+            },
+            "description": "Previously recorded turns in the conversation."
+          }
+        },
+        "required": ["success", "message", "platformName"]
+      },
+      "VectorModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the vector."
+          },
+          "namespace": {
+            "type": "string",
+            "description": "Optional namespace for organizing vectors."
+          },
+          "similarity": {
+            "type": "number",
+            "description": "The similarity score of the vector compared to the search vector."
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "description": "The text associated with the vector."
+              },
+              "chunk_index": {
+                "type": "integer",
+                "description": "The index of the text chunk within a larger document."
+              },
+              "doc_id": {
+                "type": "string",
+                "description": "The unique identifier of the document containing the vector."
+              },
+              "doc_name": {
+                "type": "string",
+                "description": "The name or title of the document."
+              }
+            },
+            "description": "Additional payload data related to the vector."
+          },
+          "vector": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "The numeric vector representation."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional tags associated with the vector."
+          }
+        },
+        "required": ["id", "vector"]
+      },
+      "VectorSearchData": {
+        "type": "object",
+        "properties": {
+          "vector": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "The embedding search vector."
+          },
+          "max_chunks": {
+            "type": "integer",
+            "description": "The maximum number of chunks to consider for the search (defaults to a default value if not provided)."
+          },
+          "with_payload": {
+            "type": "boolean",
+            "description": "Flag indicating whether to include payload data in the search results (defaults to true if not provided)."
+          },
+          "with_vector": {
+            "type": "boolean",
+            "description": "Flag indicating whether to include vectors in the search results (defaults to false if not provided)."
+          },
+          "similarity_threshold": {
+            "type": "number",
+            "description": "The similarity threshold for the search (defaults to 0 if not provided)."
+          }
+        },
+        "required": ["vector"]
+      },
+      "AnalyticLoadModel": {
+        "type": "object",
+        "required": ["record"],
+        "properties": {
+          "record": {
+            "type": "string",
+            "enum": ["load", "convo"],
+            "description": "Type of analytics whether its a load on website or the conversation analytics/metadata."
+          },
+          "userID": {
+            "type": "string",
+            "description": "The associated conversation id/user id with the."
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "The IP address of the user."
+          },
+          "countryCode": {
+            "type": "string",
+            "description": "The country code associated with the user's location."
+          },
+          "langCode": {
+            "type": "string",
+            "description": "The language code indicating the user's language."
+          },
+          "browser": {
+            "type": "string",
+            "description": "The user's browser information."
+          },
+          "platform": {
+            "type": "string",
+            "description": "The platform or device used by the user."
+          },
+          "origin": {
+            "$ref": "#/components/schemas/MessageOriginType",
+            "description": "The channel origin of the message."
+          },
+          "ts": {
+            "type": "number",
+            "description": "Timestamp indicating when the analytic load occurred."
+          },
+          "interactionsNum": {
+            "type": "number",
+            "description": "The number of interactions made by the user. (messages from user only) "
+          },
+          "firstMessageTS": {
+            "type": "number",
+            "description": "Timestamp of the first message sent by the user."
+          },
+          "lastMessageTS": {
+            "type": "number",
+            "description": "Timestamp of the last message sent by the user."
+          }
+        }
+      },
+      "SingleKBModel": {
+        "type": "object",
+        "properties": {
+          "documentID": {
+            "type": "string",
+            "description": "The unique identifier for the document."
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of the document data."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the document."
+              },
+              "canEdit": {
+                "type": "boolean",
+                "description": "Indicates whether the document can be edited."
+              }
+            },
+            "required": ["type", "name", "canEdit"],
+            "description": "The data related to the document."
+          },
+          "updatedAt": {
+            "type": "number",
+            "description": "Timestamp indicating when the document was last updated."
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of status for the document."
+              },
+              "data": {
+                "type": "object",
+                "description": "Additional data related to the document status."
+              }
+            },
+            "required": ["type", "data"],
+            "description": "Status information for the document."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of tags associated with the document."
+          }
+        }
+      },
+      "WorkspaceModel": {
+        "type": "object",
+        "properties": {
+          "photoURL": {
+            "type": "string",
+            "description": "URL to the user's photo."
+          },
+          "workspaceName": {
+            "type": "string",
+            "description": "The name of the workspace."
+          },
+          "workspaceEmails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of email addresses associated with the workspace."
+          },
+          "workspacePhotoURL": {
+            "type": "string",
+            "description": "URL to the workspace photo."
+          },
+          "workspaceSecret": {
+            "type": "string",
+            "description": "Secret key for the workspace."
+          }
+        }
+      },
+      "WorkspaceModelGET": {
+        "allOf": [
+          {
+            "required": ["uid"],
+            "type": "object",
+            "properties": {
+              "uid": {
+                "description": "The unique identifier for the user/workspace.",
+                "type": "string"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "The display name of the user."
+              },
+              "email": {
+                "type": "string",
+                "description": "The email address of the user."
+              },
+              "loadTokens": {
+                "type": "number",
+                "description": "Amount of load tokens in the user account/workspace."
+              },
+              "referredFrom": {
+                "type": "string",
+                "description": "Referral source for the user."
+              },
+              "joinedAt": {
+                "type": "number",
+                "description": "Timestamp indicating when the user joined the workspace."
+              },
+              "ownerId": {
+                "type": "string",
+                "description": "The unique identifier of the workspace owner."
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/WorkspaceModel"
+          }
+        ]
+      },
+      "AgencyModel": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the agency."
+          },
+          "squarePhotoURL": {
+            "type": "string",
+            "description": "URL to the agency's square photo."
+          },
+          "darkModeSquarePhotourl": {
+            "type": "string",
+            "description": "URL to the agency's dark mode square photo."
+          },
+          "brandingText": {
+            "type": "string",
+            "description": "Text for agency branding (supports markdown)."
+          },
+          "customDomain": {
+            "type": "string",
+            "description": "(Edit only from dashboard) Custom domain for the agency."
+          },
+          "VGsubDomain": {
+            "type": "string",
+            "description": "(Edit only from dashboard) subdomain for the agency."
+          },
+          "customThemeJSONString": {
+            "type": "string",
+            "description": "### MUST JSON.stringify() this object before passing it to the API.\n Custom theme object for the agent",
+            "$ref": "#/components/schemas/CustomTheme"
+          },
+          "isVerifiedSubDomain": {
+            "type": "boolean",
+            "description": "Indicates if the subdomain is verified."
+          },
+          "isVerifiedCustomDomain": {
+            "type": "boolean",
+            "description": "Indicates if the custom domain is verified."
+          },
+          "withVGBranding": {
+            "type": "boolean",
+            "description": "Indicates if the agency has TIXAE Agents branding."
+          },
+          "themeVariant": {
+            "type": "string",
+            "enum": ["default", "bordered", "flat", "faded"],
+            "description": "Theme variant for the agency."
+          },
+          "themeColorUsage": {
+            "type": "string",
+            "enum": ["gradient", "colorful", "plain"],
+            "description": "Color usage for the theme."
+          },
+          "googleFont": {
+            "type": "string",
+            "description": "Google font used by the agency [Browse fonts](https://fonts.google.com)"
+          },
+          "mainWebsite": {
+            "type": "string",
+            "description": "Main website URL for the agency."
+          },
+          "supportEmail": {
+            "type": "string",
+            "description": "Support email address for the agency."
+          },
+          "tosPage": {
+            "type": "string",
+            "description": "Terms of service page URL."
+          },
+          "privacyPolicypPage": {
+            "type": "string",
+            "description": "Privacy policy page URL."
+          },
+          "secret": {
+            "type": "string",
+            "description": "Secret key for the agency."
+          },
+          "OPENAI_API_KEY": {
+            "type": "string",
+            "description": "API key for OpenAI."
+          },
+          "OPENAI_DEFAULT_MODEL": {
+            "type": "string",
+            "enum": ["gpt-3.5-turbo", "gpt-4-1106-preview"],
+            "description": "Default OpenAI model for the agency."
+          },
+          "address": {
+            "type": "string",
+            "description": "Address of the agency."
+          },
+          "customCSS": {
+            "type": "string",
+            "description": "Custom CSS for the agency to inject on the dashboard."
+          },
+          "enableHumanHandoff": {
+            "type": "boolean",
+            "description": "Indicates if human handoff is enabled."
+          },
+          "resendEmailDomain": {
+            "type": "string",
+            "description": "Domain for resend email."
+          },
+          "resendEmailDomainId": {
+            "type": "string",
+            "description": "Identifier for the resend email domain."
+          },
+          "resendEmailDomainStatus": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "pending",
+              "verified",
+              "failure",
+              "temporary_failure"
+            ],
+            "description": "Status of the resend email domain."
+          },
+          "resendEmailDomainRecords_JSON_STRING": {
+            "type": "string",
+            "description": "JSON string representing resend email domain records."
+          }
+        }
+      },
+      "AgencyModelGet": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "ID": {
+                "type": "string",
+                "description": "The unique identifier for the agency."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The owner user/workspace associated with the agency."
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/AgencyModel"
+          }
+        ]
+      },
+      "ClientModelPost": {
+        "type": "object",
+        "properties": {
+          "orgId": {
+            "type": "string",
+            "description": "The org ID associated with the client."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the client."
+          },
+          "squarePhotoURL": {
+            "type": "string",
+            "description": "URL to the square photo of the client."
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the client (used as username to signin on dashboard)."
+          },
+          "dashboardPassword": {
+            "type": "string",
+            "description": "Password for the client's dashboard (used as password to signin on dashboard)."
+          },
+          "canAccess": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "/overview",
+                "/home",
+                "/convos",
+                "/analytics",
+                "/kb",
+                "/settings"
+              ],
+              "description": "List of hrefs the client can access."
+            },
+            "description": "List of hrefs the client can access."
+          },
+          "isOrgAdmin": {
+            "type": "boolean",
+            "description": "Indicates if the client is an organization admin."
+          },
+          "notificationsSettings": {
+            "type": "object",
+            "properties": {
+              "notifyThrough": {
+                "type": "string",
+                "enum": ["email", "push", "all", "none"],
+                "description": "Notification method."
+              },
+              "notifyIf": {
+                "type": "string",
+                "enum": ["all", "requestsOnly", "none"],
+                "description": "Notification trigger condition."
+              }
+            },
+            "description": "Notification settings for the client."
+          }
+        }
+      },
+      "ClientModelGet": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "ID": {
+                "type": "string",
+                "description": "The unique identifier for the client."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ownerID": {
+                "type": "string",
+                "description": "The owner user/workspace uid associated with the client."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "orgUsers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ClientModelGet"
+                },
+                "description": "List of organization users."
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/ClientModelPost"
+          }
+        ]
+      },
+      "OrgClientModelPost": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the organization client."
+          },
+          "preferredLanguage": {
+            "type": "string",
+            "description": "Preferred language for the client ISO6391 code (fr for french, no for norwegian)."
+          },
+          "squarePhotoURL": {
+            "type": "string",
+            "description": "URL to the square photo of the organization client."
+          },
+          "widgetIDs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of agent IDs associated with the organization client."
+          },
+          "adminIDs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of admin IDs associated with the organization client."
+          },
+          "canSelfEdit": {
+            "type": "boolean",
+            "description": "Indicates if the organization clients can self-edit."
+          },
+          "disallowAnyTags": {
+            "type": "boolean",
+            "description": "Indicates if any tags are disallowed."
+          },
+          "dashboardLayout": {
+            "type": "string",
+            "enum": ["vertical", "horizontal"],
+            "description": "Layout of the dashboard."
+          },
+          "lastModified": {
+            "type": "number",
+            "description": "Timestamp indicating when the organization client was last modified."
+          }
+        }
+      },
+      "OrgClientModelGet": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "ID": {
+                "type": "string",
+                "description": "The unique identifier for the organization client."
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The owner user/workspace uid associated with the org client."
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/OrgClientModelPost"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Agent/Workspace secret API key as bearer token."
+      },
+      "bearerAgents": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Agent/Workspace secret API key as bearer token."
+      },
+      "bearerWorkspace": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Workspace secret API key, found in the workspace settings page (top left)."
+      }
+    }
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "TIXAE Agents",
+  "logo": {
+    "dark": "/logo/ta-logo-512x512.png",
+    "light": "/logo/ta-logo-512x512.png"
+  },
+  "favicon": "/logo/ta-logo-512x512.png",
+  "colors": {
+    "primary": "#28a9ff",
+    "light": "#28a9ff",
+    "dark": "#28a9ff",
+    "anchors": {
+      "from": "#28a9ff",
+      "to": "#28a9ff"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@voiceglow.org"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://tixaeagents.ai/login"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Canvas",
+      "url": "canvas"
+    },
+    {
+      "name": "Voice",
+      "url": "voice"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Documentation",
+      "icon": "book-open-cover",
+      "url": "help-center/getting-started"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.gg/XrJtBsQQRN"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "help-center/when-to-use",
+        "help-center/connect-meta"
+      ]
+    },
+    {
+      "group": "Deploy",
+      "pages": [
+        "deploy/react-voice-orb",
+        "deploy/script",
+        "deploy/voice-only"
+      ]
+    },
+    {
+      "group": "Agent Creation",
+      "pages": [
+        "agent-creation/design-and-setup",
+        "agent-creation/initial-prompt",
+        "agent-creation/initial-message",
+        {
+          "icon": "database",
+          "group": "Knowledgebase",
+          "pages": [
+            "agent-creation/knowledgebase/about-the-knowledgebase",
+            {
+              "icon": "plus",
+              "group": "Adding data",
+              "pages": [
+                "agent-creation/knowledgebase/adding-data/direct-text-entry",
+                "agent-creation/knowledgebase/adding-data/file-upload",
+                "agent-creation/knowledgebase/adding-data/add-URL"
+              ]
+            },
+            "agent-creation/knowledgebase/adjusting-kb-settings",
+            "agent-creation/knowledgebase/structuring-kb-documents",
+            "agent-creation/knowledgebase/previewing-the-kb",
+            "agent-creation/knowledgebase/kb-and-ui-engine"
+          ]
+        },
+        "features/Ui-engine",
+        "agent-creation/settings"
+      ]
+    },
+    {
+      "group": "System Prompt",
+      "pages": [
+        "agent-creation/system-prompt/Overview",
+        "agent-creation/system-prompt/formatting-your-prompt",
+        {
+          "icon": "book",
+          "group": "Prompt guide",
+          "pages": [
+            "agent-creation/system-prompt/step-1-define-the-tone-and-objective",
+            "agent-creation/system-prompt/step-2-ai-plus-context",
+            "agent-creation/system-prompt/step-3-implement-cot",
+            "agent-creation/system-prompt/step-4-examples-and-reinforcing-instructions",
+            "agent-creation/system-prompt/step-5-advanced-techniques-and-testing"
+          ]
+        },
+        "agent-creation/system-prompt/techtalk",
+        "agent-creation/system-prompt/bakemate"
+      ]
+    },
+    {
+      "group": "Channels",
+      "pages": [
+        "integration/Channels/whatsapp-newMethod",
+        "integration/Channels/whatsapp",
+        "integration/Channels/meta-channels",
+        "integration/Channels/discord",
+        "integration/Channels/telegram",
+        "integration/Channels/voice"
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        "features/ai-models",
+        "features/conversations-tab",
+        "features/usage-tab",
+        "features/live-handoff",
+        "features/analytics",
+        "features/voice-to-voice",
+        "features/tools",
+        "features/ui-engine",
+        "features/crawler"
+      ]
+    },
+    {
+      "group": "Whitelabeling",
+      "pages": ["whitelabeling/getting-started"]
+    },
+    {
+      "group": "Agency",
+      "pages": [
+        "whitelabeling/agency/what-is-an-agency",
+        "whitelabeling/agency/overview-tab",
+        "whitelabeling/agency/custom-domain",
+        "whitelabeling/agency/email",
+        "whitelabeling/agency/theme",
+        "whitelabeling/agency/custom-tabs",
+        "whitelabeling/agency/footer"
+      ]
+    },
+    {
+      "group": "Clients",
+      "pages": [
+        "whitelabeling/clients/overview",
+        "whitelabeling/clients/managing-organizations",
+        "whitelabeling/clients/creating-users",
+        {
+          "icon": "desktop",
+          "group": "Client Dashboard",
+          "pages": [
+            "whitelabeling/clients/client-dashboard/features",
+            "whitelabeling/clients/client-dashboard/analytics"
+          ]
+        },
+        {
+          "icon": "credit-card",
+          "group": "Client Billing",
+          "pages": [
+            "whitelabeling/clients/client-billing/billing-overview",
+            "whitelabeling/clients/client-billing/billing-activation",
+            "whitelabeling/clients/client-billing/billing-faq"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        {
+          "icon": "globe",
+          "group": "Deploying to website",
+          "pages": [
+            "integration/deploying-to-website/overview",
+            "integration/deploying-to-website/shopify",
+            "integration/deploying-to-website/wix",
+            "integration/deploying-to-website/wordpress",
+            "integration/deploying-to-website/squarespace",
+            "integration/deploying-to-website/iframe"
+          ]
+        },
+        {
+          "group": "Voiceflow",
+          "icon": "waveform",
+          "pages": [
+            "integration/Voiceflow/overview",
+            "integration/Voiceflow/extensions"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/authentication",
+        "api-reference/endpoints"
+      ]
+    },
+    {
+      "group": "Pricing",
+      "pages": ["Pricing/credits", "Pricing/billing", "Pricing/affiliate"]
+    },
+    {
+      "group": "Support",
+      "pages": ["Support/faq", "Support/troubleshooting", "Support/contact"]
+    },
+    {
+      "group": "API Documentation",
+      "pages": ["api-reference/introduction"]
+    },
+    {
+      "group": "Canvas",
+      "pages": [
+        "canvas/introduction",
+        {
+          "icon": "circle-nodes",
+          "group": "Nodes and Flows",
+          "pages": [
+            "canvas/nodes/overview",
+            "canvas/nodes/managing-nodes",
+            "canvas/nodes/conditions",
+            "canvas/nodes/global-nodes",
+            "canvas/nodes/turbo-mode"
+          ]
+        },
+        {
+          "icon": "list",
+          "group": "Features",
+          "pages": [
+            "canvas/features/tools-integration",
+            "canvas/features/variables",
+            "canvas/features/rewind-nodes",
+            "canvas/features/testing-flows",
+            "canvas/features/calling-tools",
+            "canvas/features/custom-prompts",
+            "canvas/features/models-configuration"
+          ]
+        },
+        {
+          "icon": "brain",
+          "group": "Advanced Usage",
+          "pages": [
+            "canvas/advanced/global-access",
+            "canvas/advanced/accessibility",
+            "canvas/advanced/examples"
+          ]
+        },
+        {
+          "icon": "book",
+          "group": "Use Cases",
+          "pages": ["canvas/use-cases/confirm-email-template"]
+        }
+      ]
+    },
+    {
+      "group": "Voice",
+      "pages": [
+        "voice/introduction",
+        "voice/how-voice-works",
+        "voice/pricing",
+        {
+          "icon": "book",
+          "group": "Setup Guide",
+          "pages": ["voice/setup/twilio", "voice/setup/webcalling"]
+        },
+        {
+          "icon": "wrench",
+          "group": "Configuration",
+          "pages": [
+            "voice/config/transcriber",
+            "voice/config/speechgen",
+            "voice/config/advanced"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "V3",
+      "pages": [
+        "api-reference/v3/intro",
+        {
+          "group": "📁 Workspaces",
+          "pages": [
+            "api-reference/v3/workspaces/post",
+            "api-reference/v3/workspaces/usage/get",
+            "api-reference/v3/workspaces/get_id",
+            "api-reference/v3/workspaces/get",
+            "api-reference/v3/workspaces/delete",
+            "api-reference/v3/workspaces/update"
+          ]
+        },
+        {
+          "group": "🤖 Agents",
+          "pages": [
+            "api-reference/v3/agents/post",
+            "api-reference/v3/agents/usage/get",
+            "api-reference/v3/agents/get_id",
+            "api-reference/v3/agents/get",
+            "api-reference/v3/agents/delete",
+            "api-reference/v3/agents/update",
+            "api-reference/v3/agents/export-template",
+            "api-reference/v3/agents/import-template"
+          ]
+        },
+        {
+          "icon": "phone",
+          "group": "Calls",
+          "pages": [
+            "api-reference/v3/calls/post"
+          ]
+        },
+        {
+          "group": "🔨 Tools",
+          "pages": [
+            "api-reference/v3/tools/post",
+            "api-reference/v3/tools/get",
+            "api-reference/v3/tools/get_id",
+            "api-reference/v3/tools/delete",
+            "api-reference/v3/tools/update"
+          ]
+        },
+        {
+          "group": "✖️ Variables",
+          "pages": [
+            "api-reference/v3/variables/post",
+            "api-reference/v3/variables/get",
+            "api-reference/v3/variables/get_id",
+            "api-reference/v3/variables/delete",
+            "api-reference/v3/variables/update"
+          ]
+        },
+        {
+          "group": "👥 Leads",
+          "pages": [
+            "api-reference/v3/leads/post",
+            "api-reference/v3/leads/get",
+            "api-reference/v3/leads/get_id",
+            "api-reference/v3/leads/delete",
+            "api-reference/v3/leads/update"
+          ]
+        },
+        {
+          "group": "🧠 Knowledge Base",
+          "pages": [
+            "api-reference/v3/kb/post",
+            "api-reference/v3/kb/get",
+            "api-reference/v3/kb/get_id",
+            "api-reference/v3/kb/get_stats",
+            "api-reference/v3/kb/delete",
+            "api-reference/v3/kb/update"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Agents",
+      "pages": [
+        "api-reference/agents/intro",
+        "api-reference/agents/get",
+        "api-reference/agents/post",
+        "api-reference/agents/delete",
+        "api-reference/agents/interact/post",
+        "api-reference/agents/state/post",
+        {
+          "group": "🧠 Knowledge Base",
+          "pages": [
+            "api-reference/agents/kb/get-single",
+            "api-reference/agents/kb/put",
+            "api-reference/agents/kb/delete",
+            "api-reference/agents/kb/get",
+            "api-reference/agents/kb/post",
+            "api-reference/agents/kb/vector_search",
+            "api-reference/agents/kb/stats"
+          ]
+        },
+        {
+          "group": "💬 Conversations",
+          "pages": [
+            "api-reference/agents/convos/get",
+            "api-reference/agents/convos/export",
+            "api-reference/agents/convos/post",
+            "api-reference/agents/convos/delete"
+          ]
+        },
+        {
+          "group": "📊 Analytics",
+          "pages": [
+            "api-reference/agents/analytics/get-multi",
+            "api-reference/agents/analytics/get-single",
+            "api-reference/agents/analytics/post-single",
+            "api-reference/agents/analytics/delete-single",
+            "api-reference/agents/analytics/delete-multi"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Workspaces",
+      "pages": [
+        "api-reference/workspaces/get",
+        "api-reference/workspaces/post",
+        "api-reference/workspaces/delete",
+        {
+          "group": "💼 Agency",
+          "pages": [
+            "api-reference/workspaces/agencies/get",
+            "api-reference/workspaces/agencies/post",
+            "api-reference/workspaces/agencies/delete"
+          ]
+        },
+        {
+          "group": "🏢 Orgs",
+          "pages": [
+            "api-reference/workspaces/orgs/@get",
+            "api-reference/workspaces/orgs/@put",
+            "api-reference/workspaces/orgs/get",
+            "api-reference/workspaces/orgs/post",
+            "api-reference/workspaces/orgs/delete"
+          ]
+        },
+        {
+          "group": "🤝 Clients",
+          "pages": [
+            "api-reference/workspaces/clients/@get",
+            "api-reference/workspaces/clients/@put",
+            "api-reference/workspaces/clients/get",
+            "api-reference/workspaces/clients/post",
+            "api-reference/workspaces/clients/delete"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "linkedin": "https://linkedin.com/company/tixaeagents",
+    "facebook": "https://facebook.com/tixaeagents",
+    "instagram": "https://instagram.com/tixaeagents.app",
+    "discord": "https://discord.gg/XrJtBsQQRN"
+  }
+}

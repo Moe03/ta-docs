@@ -1,0 +1,31 @@
+---
+title: 'Get Started'
+description: 'The following is the API reference to control your account and agents through REST requests.'
+icon: rocket
+---
+<Info>
+V3 is the new API version, it is more maintainable with less bugs and more features.
+</Info>
+## First of all please know your account region from the dashboard to know which endpoint to use from these:
+
+Anything with /v3/ at the beginning will be using these endpoints:
+#### V3 EU Region:
+https://eu-voiceglow-runtime-vbmbkqccuq-ey.a.run.app
+#### V3 NA Region:
+https://na-runtime.voiceglow.org
+
+<Warning>If you use the incorrect endpoint the API will not work.</Warning>
+
+## Authorization
+- We use Bearer token to authorize any request for agents (except for public interact, analytics endpoints), workspaces, Kb, conversations, analytics, etc
+- You can use either the <strong>agent secret</strong> key or the <strong>workspace secret</strong>, both are present in your dashboard.
+<Frame caption="To get a Workspace Secret: VG Dashboard > Top left > Select workspace you want > Copy Workspace secret">
+  <img src="https://i.ibb.co/XjVNjdV/Untitled.jpg" />
+</Frame>
+<Frame caption="To get the Agent secret: VG Dashboard > Agent > Settings > Scroll down">
+  <img src="https://i.ibb.co/vY8CbgL/Capture.png" />
+</Frame>
+## Agent Platforms
+- You can currently interact with VG through either the built in AI engine or through Voiceflow, the <strong>agentPlatform</strong> defines how the agent will interact and function across the whole service.
+- The [interact API of voiceflow](https://developer.voiceflow.com/reference/stateinteract-1) inspires how we interact with VF/VG agents, when you do an interact POST request the <strong>action</strong> property functions the same as that on Voiceflow's end. 
+

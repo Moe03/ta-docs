@@ -1,0 +1,163 @@
+---
+title: 'Creating Users'
+description: ''
+icon: user
+---
+
+
+Adding users to your client organizations is a crucial step in setting up effective client management in TIXAE Agents. This guide will walk you through the process of creating and managing users for your client organizations.
+
+## Accessing User Management
+
+<Steps>
+  <Step title="Navigate to Client Tab">
+    Go to the `Client` tab in your TIXAE Agents dashboard.
+  </Step>
+  <Step title="Select Organization">
+    Find the **client organization** you want to manage from the list on the left.
+  </Step>
+  <Step title="Access User Management">
+    Click the `Manage` button next to the organization name.
+  </Step>
+</Steps>
+
+<Note>
+  Initially, the user table will be empty. This is where your client's **team members** will be listed once added.
+</Note>
+
+<Frame>
+    <img src="/images/orgnization-table-ui.png" />
+</Frame>
+
+## Adding a New User
+
+<Steps>
+  <Step title="Initiate User Creation">
+    Click the `Add User` button in the top right corner of the user management screen.
+  </Step>
+  <Step title="Enter User Details">
+    Fill out the necessary information for your client:
+    - **Full Name**
+    - **Email Address**
+    - **Password** (You can either set a custom password or click the `Generate` button for a random secure password)
+    - **Profile Photo** (Optional - select or drag and drop an image)
+
+    <Warning>
+        **Remember:** Request the correct information from your client about which email and name they want. The client will always be able to set their own details later. 
+    </Warning>
+
+  </Step>
+  <Step title="Set User Access Permissions">
+    Configure the user's access levels by selecting the appropriate checkboxes:
+    - `Org Admin`: Allows the user to edit organization info and create/invite new users for their team.
+    - `Home`: Access to the dashboard overview
+    - `Conversations`: View and manage chat transcripts
+    - `Analytics`: Access to widget statistics
+    - `Knowledge Base`: Ability to view and edit the KB
+    - `Channels`: Manage connected channels
+    - `Prompt`: Adjust the prompt, AI-model, UI-engine settings and more. 
+    - `Settings`: Modify the widget settings. This is a selection of the settings found in your agents settings tab. 
+    - `Custom Tab`: Access to any custom tabs you've created. See [custom tab]() docs for more info.
+#
+    **The settings above are the same as the agent designer. If you want to learn more about the dashboards features, [click here]()**
+#
+    <Note>
+        We know agencies want heavier permission options. More premission customization options **COMING SOON**. We will also release a dedicated doc explaining the **settings tab**.
+    </Note>
+  </Step>
+  <Step title="Finalize">
+    Click the `Add User` button to create the new user account.
+    <Frame>
+    <img src="/images/add-user-ui.png" style={{ width: '500px', borderRadius: '1.2rem' }}></img>
+    </Frame>
+  </Step>
+</Steps>
+
+
+    
+    
+
+<Tip>
+  We recommend assigning the **first user** as the `Org Admin`. This allows them to manage their organization and add other team members as needed.
+</Tip>
+
+## Managing Existing Users
+
+Once users are added, you have several options for managing them:
+
+<AccordionGroup>
+  <Accordion title="Editing User Information">
+    1. Find the user you want to edit in the table.
+    2. Click the `Edit` button on the far right of their row.
+    3. Update the necessary information in the edit form.
+    4. Click `Save` to apply the changes.
+  </Accordion>
+  <Accordion title="Deleting Users">
+    <Warning>
+      Deleting a user will remove their account and all associated data. This action **cannot be undone**.
+    </Warning>
+    1. Find the user you want to remove in the table.
+    2. Click the `Delete` button on their row.
+    3. Confirm the deletion in the prompt that appears.
+  </Accordion>
+</AccordionGroup>
+
+
+## Inviting Users to the Client Dashboard
+
+After creating a user account, you can send an invitation for them to access their dashboard:
+
+<Steps>
+<Step title="Verify Setup">
+    Before sending an invitation, use the `Log in` button to view the dashboard as the client would, ensuring all settings and permissions are correct.
+  </Step>
+  <Step title="Locate User">
+    Find the newly created user in the user management table.
+  </Step>
+  <Step title="Send Invitation">
+    Click the `Invite` button on the user's row.
+  </Step>
+  <Step title="Confirm">
+    Review the invitation details and click `Send Invite` to email the user their login information.
+  </Step>
+</Steps>
+
+<Note>
+  The invitation email includes a link that **automatically** logs the client into their dashboard. Ensure the email address is correct before sending.
+</Note>
+
+## Best Practices for User Management
+
+<CardGroup cols={2}>
+  <Card title="Regular Audits" icon="clipboard-check">
+    Periodically review user accounts to ensure they are up-to-date and all access levels are appropriate.
+  </Card>
+  <Card title="Secure Passwords" icon="lock">
+    Encourage clients to change their passwords upon first login and to use strong, unique passwords.
+  </Card>
+  <Card title="Clear Communication" icon="comments">
+    Inform users about their access levels and any changes made to their accounts.
+  </Card>
+  <Card title="Minimal Permissions" icon="shield-check">
+    Grant users only the permissions they need to perform their roles to maintain security.
+  </Card>
+</CardGroup>
+
+## Related Documentation
+
+Explore these related topics to further enhance your understanding of TIXAE Agent's whitelabel features:
+
+<CardGroup cols={2}>
+  <Card title="Managing Organizations" icon="building" href="/whitelabeling/clients/managing-organizations">
+    Learn how to create and manage client organizations.
+  </Card>
+  <Card title="Setting Permissions" icon="lock" href="/whitelabeling/clients/setting-permissions">
+    Understand how to configure access levels for client users.
+  </Card>
+  <Card title="Client Dashboard Features" icon="gauge" href="/whitelabeling/clients/client-dashboard/features">
+    Explore the features available in the client-facing dashboard.
+  </Card>
+  <Card title="Inviting Clients" icon="envelope" href="/whitelabeling/clients/inviting-clients">
+    Master the process of onboarding clients to their new dashboard.
+  </Card>
+</CardGroup>

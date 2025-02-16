@@ -1,0 +1,76 @@
+---
+title: "Credits"
+description: "Credits are like your account fuel, whenever you interact with your agent on any channel that will consume your credits, you can opt in or out for specific features allowing you to fully control what you pay for."
+icon: battery-full
+---
+
+### How Credits Work
+
+- **Allocation**: Users are allocated a certain number of credits upon signing up or can purchase additional credits as needed, as shown in the "Pay only for what you'll need" section.
+- **Consumption**: Each feature or service consumes a specific number of credits based on its complexity and resource requirements, as detailed in the "Providers Pricing" table.
+- **Balance Tracking**: Users can monitor their credit balance in real-time within their account dashboard, as indicated by the "Estimated Credits Needed" section in the "Pricing Calculator".
+
+---
+
+## Impact of LLM Models on Credit Usage
+
+The "Pricing Calculator" tool in the image offers insights into the impact of Large Language Models (LLMs) on credit usage. The "LLM" section includes a table that lists various LLM models and their corresponding credit consumption:
+
+| LLM Model               | Input Tokens | Output Tokens |
+| ----------------------- | ------------ | ------------- |
+| GPT-4o - OpenAI         | 10 Credits   | 35 Credits    |
+| GPT-4 - OpenAI          | 30 Credits   | 90 Credits    |
+| GPT-4 Sonic - Anthropic | 12 Credits   | 30 Credits    |
+| GPT-4 Halu - Anthropic  | 1 Credit     | 2 Credits     |
+
+This table demonstrates that more complex or powerful LLM models, such as GPT-4, tend to consume significantly more credits compared to simpler or smaller LLM models. The credit consumption is tied to the number of input and output tokens used by each LLM, highlighting the resource-intensive nature of these advanced language models.
+
+By providing this detailed information, the platform allows users to understand the impact of their LLM usage on their overall credit consumption and make informed decisions about which models to use for their specific needs.
+
+<Note>
+  You can use your own OpenAI, Anthropic, etc API keys to dramatically decrease
+  your credits usage by up to 20x for specific LLM models like GPT-4o!
+</Note>
+
+---
+
+## Optimizing Credit Consumption
+
+To help you minimize your credit usage:
+![1](/images/meta-tut/20.PNG)
+
+- Add your own API Keys to dramatically decrease your credits usage.
+
+![2](/images/meta-tut/21.PNG)
+
+- This option MUST be selected for decreases your credits usage properly.
+
+---
+
+## Purchasing Additional Credits
+
+If you find that your credit allocation is insufficient, you can easily purchase more credits through the platform's billing section.
+Simply **log in to your account** > navigate to the **Billing** > **select the desired credit package** > then **click on Subscribe**, and complete the payment process.
+
+<Note>
+  Maintaining an adequate credit balance is crucial to ensuring uninterrupted
+  access to the platform's features and services.
+</Note>
+
+---
+
+## Saving credit & optimizing usage:
+
+One of our users copmlained credits were being consumed quickly, by changing the following 2 settings we decreased about 95% of his credits usage:
+
+- **Use the latest widget code**
+The legacy widget code is using an expensive CDN prompting us to charge small amount of credits on every visit, the new script is using a different more efficient CDN (vg-bunny and is the current latest) thus saving a big amount of credits.
+
+- **Disable autostart & disable inital propmt**
+The autostart feature combined with initial prompt can drain the credits insantely quickly where for every visit you can spend up to 50 credits if the propmt & output are long
+
+By disabling autostart:
+- You save 1 credit fee for the base fee of the interaction 
+
+By disabling the initial prompt:
+- You save up to 100 credits per visit since you're not going to propmt the AI unless the user explicity asks for it, by default you have the autostart option is off for this reason.

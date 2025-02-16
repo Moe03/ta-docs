@@ -1,0 +1,80 @@
+---
+title: Transcriber Configuration
+description: "Learn how to configure speech-to-text transcribers in TIXAE Voice Suite."
+icon: "subtitles"
+---
+
+Learn how to configure **speech-to-text transcribers** in TIXAE Voice Suite. Transcribers convert user voice inputs into real-time text using providers like **Deepgram**.
+
+---
+
+## 🛠 Configuring the Transcriber  
+
+Follow these steps to set up the transcriber:  
+
+1. Navigate to the **Voice Setup** page in your TIXAE dashboard.  
+2. Select the **Transcriber** tab.  
+
+---
+
+## 🔧 Step 1: Choose Your Transcriber Provider  
+
+1. Use the dropdown to select your preferred provider.  
+   - **Deepgram** is currently supported.  
+   - More providers will be added soon.
+
+![Choose Transcriber Provider](/voice/assets/transcriber.png)
+
+---
+
+## 🌐 Step 2: Configure Language  
+
+- Input the **2-character language code** that matches the target transcription language.  
+  - For example:  
+    - `en` for English  
+    - `fr` for French  
+    - `es` for Spanish  
+
+> Refer to the documentation of the chosen provider (e.g., Deepgram) for supported language codes.  
+
+---
+
+## ⚙️ Step 3: Adjust Patience Factor  
+
+The **Patience Factor** determines how long the transcriber will wait for the user to finish speaking before sending the response:  
+
+- **Lower Values (e.g., 0.2)**: Faster response time but more impatience.  
+- **Higher Values (e.g., 0.7)**: Longer waiting time for user input to finish.  
+
+> **Default**: 0.5.  
+
+
+---
+
+## 🚦 Advanced Settings  
+
+If your transcriber provider offers advanced options, such as **custom models**, input the **Model ID** field:  
+
+- **Model ID**: Use this if a new model has been released by the provider (e.g., Deepgram’s Beta models).  
+- Ensure to test thoroughly before deployment.  
+
+---
+
+## 📝 Example Use Case  
+
+Here’s a simple scenario:  
+
+1. **User**: "What time is my meeting tomorrow?"  
+2. **Transcriber**: Converts voice into text: `"What time is my meeting tomorrow?"`  
+3. The **AI** processes the text and generates a response.
+
+---
+
+## 🔗 Next Steps  
+
+1. **[Speech Generation](../config/speechgen)** - Set up speech responses using ElevenLabs or other providers.  
+2. **[Advanced Settings](../config/advanced)** - Explore advanced routing, recording, and more.
+
+---
+
+By configuring the transcriber settings, you can ensure fast, reliable, and accurate voice-to-text interactions in your

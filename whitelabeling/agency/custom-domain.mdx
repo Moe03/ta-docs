@@ -1,0 +1,107 @@
+---
+title: 'Custom Domain'
+description: 'Description of your new file.'
+icon: file
+---
+
+# Set Up a Custom Domain
+<Frame>
+  <img src="/images/agency-domain-tab.png" alt="Custom Domain Setup Interface" width="600" class="rounded-md" />
+</Frame>
+Navigate to the Domains tab in your agency settings to connect a domain that will be used for all links and connections associated with your agency. This includes your dashboard link, prototype link, and iframe link.
+
+### Domain Setup Options
+You have two options for setting up your domain:
+<CardGroup cols={2}>
+  <Card title="TIXAE Agent Subdomain" icon="globe">
+    Connect to a TIXAE Agents domain (e.g., youragency.tixae.ai)
+  </Card>
+  <Card title="Custom Domain" icon="server">
+    Use a custom domain that you've set up yourself
+  </Card>
+</CardGroup>
+## Using a TIXAE Agent Subdomain
+<Steps>
+  <Step title="Enter Desired Name">
+    Type your desired subdomain name in the provided field.
+  </Step>
+  <Step title="Automatic Creation">
+    TIXAE Agents will automatically create a new subdomain for you.
+  </Step>
+  <Step title="Verification">
+    Wait for the `Domain verified successfully` and `Domain is live` messages to confirm success.
+  </Step>
+  <Step title="Domain is Live" icon="party-horn">
+    If everything is done correctly, your domain should be live! Any trouble? Ask [Gia]() or [Contact us]()
+  </Step>
+</Steps>
+<Warning>
+  DNS settings might take some time to propagate. Be patient if the domain doesn't become live immediately.
+</Warning>
+## Using Your Own Custom Domain
+For a truly personalized brand experience, use a subdomain of your existing domain **(e.g., dashboard.youragency.com, chat.youragency.com, or agentportal.youragency.com)**.
+<Steps>
+  <Step title="Enter Domain">
+    Input your chosen domain in the designated field.
+
+
+    <Frame>
+  <video src="/images/custom-domain-video.mp4" alt="Custom Domain verification" width="500" class="rounded-md" autoPlay loop />
+</Frame>
+  </Step>
+  <Step title="DNS Check">
+    The DNS checking tool will automatically verify if your domain has the necessary records.
+  </Step>
+  <Step title="Add DNS Records">
+    Add the following records to your domain provider:
+    <AccordionGroup>
+      <Accordion title="CNAME Record">
+        <CodeGroup>
+          ```plaintext
+          Type: CNAME
+          Name: [YOUR_SUBDOMAIN]
+          Value: cname.vercel-dns.com.
+          TTL: Leave as is
+          ```
+        </CodeGroup>
+      </Accordion>
+      <Accordion title="TXT Record">
+        <CodeGroup>
+          ```plaintext
+          Type: TXT
+          Name: _vercel
+          Value: vc-domain-verify=[YOUR-DOMAIN],(YOUR-UNIQUE-IDENTIFIER)
+          TTL: Leave as is
+          ```
+        </CodeGroup>
+      </Accordion>
+    </AccordionGroup>
+  </Step>
+  <Step title="Verification">
+    Wait for the DNS checker to update and display checkmarks for `Domain verified successfully` and `Domain is live`.
+  </Step>
+   <Step title="Domain is Live" icon="party-horn">
+    If everything is done correctly, your domain should be live! Any trouble? Ask [Gia]() or [Contact us]()
+
+    <Frame>
+  <img src="/images/agency-verified-domain.png" alt="Custom Domain verification" width="600" class="rounded-md" />
+</Frame>
+
+
+  </Step>
+</Steps>
+<Tip>
+  We use [Godaddy](https://godaddy.com) for domain management, but any reputable domain provider will work.
+</Tip>
+### After Domain Setup
+Once your domain is successfully set up:
+<Card title="Access Client Management" icon="users">
+  Adding your domain grants access to the [Client](/whitelabeling/clients/overview) tab, where you can create new client organizations and manage their agents.
+</Card>
+
+
+
+
+
+
+

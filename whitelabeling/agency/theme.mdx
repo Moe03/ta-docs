@@ -1,0 +1,85 @@
+---
+title: 'Agency Theme'
+description: ''
+icon: brush
+---
+
+<Frame>
+**The design preview interface:**
+  <img src="/images/agency-design-preview.png" alt="Agency color usage options" className="rounded-md" width="500"/>
+</Frame>
+
+Navigate to the Theme tab in the agency manager to access the following customization features:
+### Font Family
+Select a font that resonates with your brand from the extensive library of **free** font from [Google Fonts](https://fonts.google.com). 
+
+
+
+### Color Usage
+Choose how extensively you want to use your brand colors throughout the dashboard:
+<Frame>
+  <img src="/images/agency-color-usage.png" alt="Agency color usage options" className="rounded-md" width="600"/>
+</Frame>
+<CardGroup cols={3}>
+  <Card title="Plain" icon="palette">
+    Simple design with primary color used sparingly
+  </Card>
+  <Card title="Colorful" icon="paintbrush">
+    More branded look with increased color usage
+  </Card>
+  <Card title="Gradient" icon="fill-drip">
+    Mix of colors with trendy gradient touches
+  </Card>
+</CardGroup>
+### Theme Variant
+Select the overall style of your dashboard elements:
+<Frame>
+  <img src="/images/agency-theme-variant.png" alt="Agency theme variant options" className="rounded-md" width="500"/>
+</Frame>
+<CardGroup cols={2}>
+  <Card title="Default" icon="circle-check">
+    Standard, modern look
+  </Card>
+  <Card title="Bordered" icon="border-all">
+    Elements with defined borders
+  </Card>
+  <Card title="Faded" icon="soft-serve">
+    Subtle, softer appearance
+  </Card>
+  <Card title="Flat" icon="square">
+    Minimalist, flat design
+  </Card>
+</CardGroup>
+### Agency Brand Colors
+Define your brand's color palette:
+<Frame>
+  <img src="/images/agency-brand-color-picker.png" alt="Agency color picker" className="rounded-md" width="500"/>
+</Frame>
+<Steps>
+  <Step title="Set Primary Color">
+    Choose your main brand color using the color picker or enter the HEX code
+  </Step>
+  <Step title="Adjust Color Variants">
+    Fine-tune different shades of your primary color for various UI elements
+  </Step>
+  <Step title="Toggle Dark Mode">
+    Enable or disable dark mode for your dashboard
+  </Step>
+</Steps>
+### Client Dashboard Custom CSS
+For advanced customization, you can add custom CSS to fine-tune your dashboard's appearance:
+<Frame>
+  <img src="/images/agency-css-settings.png" alt="Agency custom CSS field" className="rounded-md" width="500"/>
+</Frame>
+<Tip>
+Use **custom CSS** to make precise adjustments to your dashboard's look and feel. Be cautious with your changes to maintain overall design consistency.
+</Tip>
+<CodeGroup>
+
+  ```css Example Custom CSS
+  /* This example makes the corners more square, nice way to imitate website design for brand consistency */
+  * {
+    border-radius: 1px !important;
+  }
+  ```
+</CodeGroup>

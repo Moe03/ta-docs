@@ -1,0 +1,826 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI Plant Store",
+        "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://sandbox.mintlify.com"
+        }
+    ],
+    "paths": {
+        "/plants": {
+            "get": {
+                "description": "Returns all plants from the system that the user has access to",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Plant response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Plant"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new plant in the store",
+                "requestBody": {
+                    "description": "Plant to add to the store",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewPlant"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "plant response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plant"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plants/{id}": {
+            "delete": {
+                "description": "Deletes a single plant based on the ID supplied",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of plant to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Plant deleted",
+                        "content": {}
+                    },
+                    "400": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/agents/{agent_id}": {
+            "get": {
+                "description": "Returns agent data",
+                "parameters": [
+                    {
+                        "name": "agent_id",
+                        "in": "path",
+                        "description": "ID of agent to get",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Agent response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "#ref": "#/components/schemas/Agent"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Agent": {
+                "required": [
+                    "ID",
+                    "title",
+                    "agentPlatform"
+                ],
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "description": "ID of the agent",
+                        "type": "string"
+                    },
+                    "agentPlatform": {
+                        "description": "Platform of the Agent",
+                        "enum": [
+                            "vf",
+                            "vg"
+                        ],
+                        "type": "string"
+                    },
+                    "VF_DIALOGUE_API_KEY": {
+                        "description": "For VF agents only -- the API key for the agent",
+                        "type": "string"
+                    },
+                    "VF_PROJECT_API_KEY": {
+                        "description": "For VF agents only -- the Project API key",
+                        "type": "string"
+                    },
+                    "theme": {
+                        "description": "Predefined themes: 'blue-light' | 'purple-light' | 'blue-dark' | 'purple-dark' | 'custom-light' | 'custom-dark' // custom themes used along customThemeJSONString",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Agent description",
+                        "type": "string"
+                    },
+                    "roundedImageURL": {
+                        "description": "Widget popup launch image",
+                        "type": "string"
+                    },
+                    "messageDelayMS": {
+                        "description": "Delay between messages in milliseconds",
+                        "type": "number"
+                    },
+                    "proactiveMessage": {
+                        "description": "Popup proactive message",
+                        "type": "string"
+                    },
+                    "recordChatHistory": {
+                        "description": "Record chat history on VG dashboard or not",
+                        "type": "boolean"
+                    },
+                    "chatBgURL": {
+                        "description": "Chatbox background image",
+                        "type": "string"
+                    },
+                    "disableSmoothScroll": {
+                        "description": "Disable scroll on new messages",
+                        "type": "boolean"
+                    },
+                    "fontFamily": {
+                        "description": "Google font family",
+                        "type": "string"
+                    },
+                    "branding": {
+                        "description": "Branding text under the chatbox",
+                        "type": "string"
+                    },
+                    "customThemeJSONString": {
+                        "description": "AgentModel.customThemeJSONString",
+                        "$ref": "#/components/schemas/CustomThemeJSONString"
+                    },
+                    "autoStartWidget": {
+                        "description": "AgentModel.autoStartWidget",
+                        "type": "boolean"
+                    },
+                    "allTimeTriggers": {
+                        "description": "AgentModel.allTimeTriggers",
+                        "type": "number"
+                    },
+                    "syncBrowser": {
+                        "description": "AgentModel.syncBrowser",
+                        "type": "boolean"
+                    },
+                    "delayBeforeSubmit": {
+                        "description": "AgentModel.delayBeforeSubmit",
+                        "type": "number"
+                    },
+                    "region": {
+                        "enum": [
+                            "TIXAE Agents-eu",
+                            "(default)"
+                        ],
+                        "description": "AgentModel.region",
+                        "type": "string"
+                    },
+                    "listenForUrlChanges": {
+                        "description": "AgentModel.listenForUrlChanges",
+                        "type": "boolean"
+                    },
+                    "chatForget": {
+                        "description": "AgentModel.chatForget",
+                        "type": "boolean"
+                    },
+                    "lang": {
+                        "description": "AgentModel.lang",
+                        "type": "string"
+                    },
+                    "customButtonJSON_STRING": {
+                        "description": "AgentModel.customButtonJSON_STRING",
+                        "type": "string"
+                    },
+                    "enableAudioSupport": {
+                        "description": "AgentModel.enableAudioSupport",
+                        "type": "boolean"
+                    },
+                    "AITranslateTo": {
+                        "description": "AgentModel.AITranslateTo",
+                        "type": "string"
+                    },
+                    "enableAITranslate": {
+                        "description": "AgentModel.enableAITranslate",
+                        "type": "boolean"
+                    },
+                    "disableNoReplyListener": {
+                        "description": "AgentModel.disableNoReplyListener",
+                        "type": "boolean"
+                    },
+                    "enableHumanHandoff": {
+                        "description": "AgentModel.enableHumanHandoff",
+                        "type": "boolean"
+                    },
+                    "alwaysShowHandoff": {
+                        "description": "AgentModel.alwaysShowHandoff",
+                        "type": "boolean"
+                    },
+                    "manualControl": {
+                        "description": "AgentModel.manualControl",
+                        "type": "boolean"
+                    },
+                    "enableVGHandoff": {
+                        "description": "AgentModel.enableVGHandoff",
+                        "type": "boolean"
+                    },
+                    "fixedHandoffPopup": {
+                        "description": "AgentModel.fixedHandoffPopup",
+                        "type": "boolean"
+                    },
+                    "buttonsLayout": {
+                        "enum": [
+                            "horizontal",
+                            "vertical"
+                        ],
+                        "description": "AgentModel.buttonsLayout",
+                        "type": "string"
+                    },
+                    "ADVANCED_customCSS": {
+                        "description": "AgentModel.ADVANCED_customCSS",
+                        "type": "string"
+                    },
+                    "messagesLimit": {
+                        "description": "AgentModel.messagesLimit",
+                        "type": "number"
+                    },
+                    "whatsappToken": {
+                        "description": "AgentModel.whatsappToken",
+                        "type": "string"
+                    },
+                    "whatsappNumberId": {
+                        "description": "AgentModel.whatsappNumberId",
+                        "type": "string"
+                    },
+                    "whatsappBusniessId": {
+                        "description": "AgentModel.whatsappBusniessId",
+                        "type": "string"
+                    },
+                    "waTestNumber": {
+                        "description": "AgentModel.waTestNumber",
+                        "type": "string"
+                    },
+                    "waVerifyPassed": {
+                        "description": "AgentModel.waVerifyPassed",
+                        "type": "boolean"
+                    },
+                    "waTestPassed": {
+                        "description": "AgentModel.waTestPassed",
+                        "type": "boolean"
+                    },
+                    "webhookUrl": {
+                        "description": "AgentModel.webhookUrl",
+                        "type": "string"
+                    },
+                    "gcloudPrivateKey": {
+                        "description": "AgentModel.gcloudPrivateKey",
+                        "type": "string"
+                    },
+                    "gcloudClientEmail": {
+                        "description": "AgentModel.gcloudClientEmail",
+                        "type": "string"
+                    },
+                    "smartInit": {
+                        "description": "AgentModel.smartInit",
+                        "type": "boolean"
+                    },
+                    "UIhandoffdescription": {
+                        "description": "AgentModel.UIhandoffdescription",
+                        "type": "string"
+                    },
+                    "UIhandoffSubdescription": {
+                        "description": "AgentModel.UIhandoffSubdescription",
+                        "type": "string"
+                    },
+                    "igVerified": {
+                        "description": "AgentModel.igVerified",
+                        "type": "boolean"
+                    },
+                    "igAccessToken": {
+                        "description": "AgentModel.igAccessToken",
+                        "type": "string"
+                    },
+                    "showHandoffEvenIfOffline": {
+                        "description": "AgentModel.showHandoffEvenIfOffline",
+                        "type": "boolean"
+                    },
+                    "vg_prompt": {
+                        "description": "AgentModel.vg_prompt",
+                        "type": "string"
+                    },
+                    "vg_initMessages": {
+                        "items": {
+                            "description": "AgentModel.vg_initMessages.[]",
+                            "type": "string"
+                        },
+                        "description": "AgentModel.vg_initMessages",
+                        "type": "array"
+                    },
+                    "vg_systemPrompt": {
+                        "description": "AgentModel.vg_systemPrompt",
+                        "type": "string"
+                    },
+                    "vg_temperature": {
+                        "description": "AgentModel.vg_temperature",
+                        "type": "number"
+                    },
+                    "vg_defaultModel": {
+                        "description": "AgentModel.vg_defaultModel"
+                    },
+                    "vg_maxTokens": {
+                        "description": "AgentModel.vg_maxTokens",
+                        "type": "number"
+                    },
+                    "vg_kbDefaultDimension": {
+                        "description": "AgentModel.vg_kbDefaultDimension",
+                        "type": "number"
+                    },
+                    "vg_kbTopChunks": {
+                        "description": "AgentModel.vg_kbTopChunks",
+                        "type": "number"
+                    },
+                    "SECRET_API_KEY": {
+                        "description": "AgentModel.SECRET_API_KEY",
+                        "type": "string"
+                    },
+                    "vg_kbCharCount": {
+                        "description": "AgentModel.vg_kbCharCount",
+                        "type": "number"
+                    },
+                    "vg_kbDocsNum": {
+                        "description": "AgentModel.vg_kbDocsNum",
+                        "type": "number"
+                    },
+                    "vg_enableUIEngine": {
+                        "description": "AgentModel.vg_enableUIEngine",
+                        "type": "boolean"
+                    },
+                    "vg_enableAboutContext": {
+                        "description": "AgentModel.vg_enableAboutContext",
+                        "type": "boolean"
+                    },
+                    "avatarImageUrl": {
+                        "description": "AgentModel.avatarImageUrl",
+                        "type": "string"
+                    },
+                    "headerImageUrl": {
+                        "description": "AgentModel.headerImageUrl",
+                        "type": "string"
+                    },
+                    "bannerImageUrl": {
+                        "description": "AgentModel.bannerImageUrl",
+                        "type": "string"
+                    },
+                    "enableQuickFileUpload": {
+                        "description": "AgentModel.enableQuickFileUpload",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Error": {
+                "required": [
+                    "error",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Agent": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "description": "AgentModel.ID",
+                        "type": "string"
+                    },
+                    "agentPlatform": {
+                        "description": "Platform of the Agent",
+                        "enum": [
+                            "vf",
+                            "vg"
+                        ],
+                        "type": "string"
+                    },
+                    "VF_DIALOGUE_API_KEY": {
+                        "description": "For VF agents only -- the API key for the agent",
+                        "type": "string"
+                    },
+                    "VF_PROJECT_API_KEY": {
+                        "description": "For VF agents only -- the Project API key",
+                        "type": "string"
+                    },
+                    "theme": {
+                        "description": "Predefined themes: 'blue-light' | 'purple-light' | 'blue-dark' | 'purple-dark' | 'custom-light' | 'custom-dark' // custom themes used along customThemeJSONString",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Agent description",
+                        "type": "string"
+                    },
+                    "roundedImageURL": {
+                        "description": "Widget popup launch image",
+                        "type": "string"
+                    },
+                    "messageDelayMS": {
+                        "description": "Delay between messages in milliseconds",
+                        "type": "number"
+                    },
+                    "proactiveMessage": {
+                        "description": "Popup proactive message",
+                        "type": "string"
+                    },
+                    "recordChatHistory": {
+                        "description": "Record chat history on VG dashboard or not",
+                        "type": "boolean"
+                    },
+                    "chatBgURL": {
+                        "description": "Chatbox background image",
+                        "type": "string"
+                    },
+                    "disableSmoothScroll": {
+                        "description": "Disable scroll on new messages",
+                        "type": "boolean"
+                    },
+                    "fontFamily": {
+                        "description": "Google font family",
+                        "type": "string"
+                    },
+                    "branding": {
+                        "description": "Branding text under the chatbox",
+                        "type": "string"
+                    },
+                    "customThemeJSONString": {
+                        "description": "Custom theme JSON string, used along 'theme': 'custom-light' | 'custom-dark' to define custom themes, the themeType should be 'light' or 'dark'",
+                        "$ref": "#/components/schemas/CustomThemeJSONString"
+                    },
+                    "autoStartWidget": {
+                        "description": "AgentModel.autoStartWidget",
+                        "type": "boolean"
+                    },
+                    "allTimeTriggers": {
+                        "description": "AgentModel.allTimeTriggers",
+                        "type": "number"
+                    },
+                    "syncBrowser": {
+                        "description": "AgentModel.syncBrowser",
+                        "type": "boolean"
+                    },
+                    "delayBeforeSubmit": {
+                        "description": "AgentModel.delayBeforeSubmit",
+                        "type": "number"
+                    },
+                    "region": {
+                        "enum": [
+                            "TIXAE Agents-eu",
+                            "(default)"
+                        ],
+                        "description": "AgentModel.region",
+                        "type": "string"
+                    },
+                    "listenForUrlChanges": {
+                        "description": "AgentModel.listenForUrlChanges",
+                        "type": "boolean"
+                    },
+                    "chatForget": {
+                        "description": "AgentModel.chatForget",
+                        "type": "boolean"
+                    },
+                    "lang": {
+                        "description": "AgentModel.lang",
+                        "type": "string"
+                    },
+                    "customButtonJSON_STRING": {
+                        "description": "AgentModel.customButtonJSON_STRING",
+                        "type": "string"
+                    },
+                    "enableAudioSupport": {
+                        "description": "AgentModel.enableAudioSupport",
+                        "type": "boolean"
+                    },
+                    "AITranslateTo": {
+                        "description": "AgentModel.AITranslateTo",
+                        "type": "string"
+                    },
+                    "enableAITranslate": {
+                        "description": "AgentModel.enableAITranslate",
+                        "type": "boolean"
+                    },
+                    "disableNoReplyListener": {
+                        "description": "AgentModel.disableNoReplyListener",
+                        "type": "boolean"
+                    },
+                    "enableHumanHandoff": {
+                        "description": "AgentModel.enableHumanHandoff",
+                        "type": "boolean"
+                    },
+                    "alwaysShowHandoff": {
+                        "description": "AgentModel.alwaysShowHandoff",
+                        "type": "boolean"
+                    },
+                    "manualControl": {
+                        "description": "AgentModel.manualControl",
+                        "type": "boolean"
+                    },
+                    "enableVGHandoff": {
+                        "description": "AgentModel.enableVGHandoff",
+                        "type": "boolean"
+                    },
+                    "fixedHandoffPopup": {
+                        "description": "AgentModel.fixedHandoffPopup",
+                        "type": "boolean"
+                    },
+                    "buttonsLayout": {
+                        "enum": [
+                            "horizontal",
+                            "vertical"
+                        ],
+                        "description": "AgentModel.buttonsLayout",
+                        "type": "string"
+                    },
+                    "ADVANCED_customCSS": {
+                        "description": "AgentModel.ADVANCED_customCSS",
+                        "type": "string"
+                    },
+                    "messagesLimit": {
+                        "description": "AgentModel.messagesLimit",
+                        "type": "number"
+                    },
+                    "whatsappToken": {
+                        "description": "AgentModel.whatsappToken",
+                        "type": "string"
+                    },
+                    "whatsappNumberId": {
+                        "description": "AgentModel.whatsappNumberId",
+                        "type": "string"
+                    },
+                    "whatsappBusniessId": {
+                        "description": "AgentModel.whatsappBusniessId",
+                        "type": "string"
+                    },
+                    "waTestNumber": {
+                        "description": "AgentModel.waTestNumber",
+                        "type": "string"
+                    },
+                    "waVerifyPassed": {
+                        "description": "AgentModel.waVerifyPassed",
+                        "type": "boolean"
+                    },
+                    "waTestPassed": {
+                        "description": "AgentModel.waTestPassed",
+                        "type": "boolean"
+                    },
+                    "webhookUrl": {
+                        "description": "AgentModel.webhookUrl",
+                        "type": "string"
+                    },
+                    "gcloudPrivateKey": {
+                        "description": "AgentModel.gcloudPrivateKey",
+                        "type": "string"
+                    },
+                    "gcloudClientEmail": {
+                        "description": "AgentModel.gcloudClientEmail",
+                        "type": "string"
+                    },
+                    "smartInit": {
+                        "description": "AgentModel.smartInit",
+                        "type": "boolean"
+                    },
+                    "UIhandoffdescription": {
+                        "description": "AgentModel.UIhandoffdescription",
+                        "type": "string"
+                    },
+                    "UIhandoffSubdescription": {
+                        "description": "AgentModel.UIhandoffSubdescription",
+                        "type": "string"
+                    },
+                    "igVerified": {
+                        "description": "AgentModel.igVerified",
+                        "type": "boolean"
+                    },
+                    "igAccessToken": {
+                        "description": "AgentModel.igAccessToken",
+                        "type": "string"
+                    },
+                    "showHandoffEvenIfOffline": {
+                        "description": "AgentModel.showHandoffEvenIfOffline",
+                        "type": "boolean"
+                    },
+                    "vg_prompt": {
+                        "description": "AgentModel.vg_prompt",
+                        "type": "string"
+                    },
+                    "vg_initMessages": {
+                        "items": {
+                            "description": "AgentModel.vg_initMessages.[]",
+                            "type": "string"
+                        },
+                        "description": "AgentModel.vg_initMessages",
+                        "type": "array"
+                    },
+                    "vg_systemPrompt": {
+                        "description": "AgentModel.vg_systemPrompt",
+                        "type": "string"
+                    },
+                    "vg_temperature": {
+                        "description": "AgentModel.vg_temperature",
+                        "type": "number"
+                    },
+                    "vg_defaultModel": {
+                        "description": "AgentModel.vg_defaultModel"
+                    },
+                    "vg_maxTokens": {
+                        "description": "AgentModel.vg_maxTokens",
+                        "type": "number"
+                    },
+                    "vg_kbDefaultDimension": {
+                        "description": "AgentModel.vg_kbDefaultDimension",
+                        "type": "number"
+                    },
+                    "vg_kbTopChunks": {
+                        "description": "AgentModel.vg_kbTopChunks",
+                        "type": "number"
+                    },
+                    "SECRET_API_KEY": {
+                        "description": "AgentModel.SECRET_API_KEY",
+                        "type": "string"
+                    },
+                    "vg_kbCharCount": {
+                        "description": "AgentModel.vg_kbCharCount",
+                        "type": "number"
+                    },
+                    "vg_kbDocsNum": {
+                        "description": "AgentModel.vg_kbDocsNum",
+                        "type": "number"
+                    },
+                    "vg_enableUIEngine": {
+                        "description": "AgentModel.vg_enableUIEngine",
+                        "type": "boolean"
+                    },
+                    "vg_enableAboutContext": {
+                        "description": "AgentModel.vg_enableAboutContext",
+                        "type": "boolean"
+                    },
+                    "avatarImageUrl": {
+                        "description": "AgentModel.avatarImageUrl",
+                        "type": "string"
+                    },
+                    "headerImageUrl": {
+                        "description": "AgentModel.headerImageUrl",
+                        "type": "string"
+                    },
+                    "bannerImageUrl": {
+                        "description": "AgentModel.bannerImageUrl",
+                        "type": "string"
+                    },
+                    "enableQuickFileUpload": {
+                        "description": "AgentModel.enableQuickFileUpload",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "CustomTheme": {
+                "type": "object",
+                "required": [
+                    "themeType",
+                    "primary",
+                    "nineColorPallet"
+                ],
+                "properties": {
+                    "themeType": {
+                        "type": "string",
+                        "enum": [
+                            "dark",
+                            "light"
+                        ],
+                        "description": "Theme type"
+                    },
+                    "primary": {
+                        "type": "string",
+                        "description": "Primary color for the theme"
+                    },
+                    "nineColorPallet": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "description": "Array length of 9 where every item is an array of HSL values: [50, 50, 50]"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization",
+                "description": "API Key Authentication"
+            }
+        }
+    }
+}

@@ -1,0 +1,135 @@
+---
+title: 'Managing Client Organizations'
+description: ''
+icon: users
+---
+
+Effectively managing client organizations is crucial for maintaining a **structured** and **efficient** agency operation in TIXAE Agents. This guide will walk you through the process of creating, editing, and managing client organizations.
+
+<Frame>
+    <img src="/images/clients-ui.png" />
+    </Frame>
+
+
+## Creating a New Organization
+
+<Steps>
+  <Step title="Access Client Tab">
+    Navigate to the `Client` tab in your TIXAE Agents dashboard.
+    
+  </Step>
+  <Step title="Initiate Creation">
+    Click the `+ New Client` button in the upper middle section of the interface.
+  </Step>
+  <Step title="Enter Details">
+    In the organization creation screen, provide the following information:
+    - **Organization Name** (Your client's business name)
+    - Upload or drag-and-drop a **logo/image** for the organization
+    <Frame>
+    <img src="/images/create-new-org.png" />
+    </Frame>
+  </Step>
+  <Step title="Finalize">
+    Click the `+ Add` button at the bottom of the screen to create the organization.
+  </Step>
+</Steps>
+
+
+<Tip>
+  After creating an organization, you can customize additional settings such as dashboard language, layout, and features. See the **Configuring Organization Settings** section below for more details.
+</Tip>
+
+## Assigning Agents to Organizations
+
+Once you've created an organization, you'll need to assign relevant AI agents (widgets) to it.
+
+<Steps>
+  <Step title="Locate Agents">
+    Find the agent list on the **right side** of the Client tab.
+  </Step>
+  <Step title="Search (Optional)">
+    Use the **search bar** at the top of the agent list to find specific agents quickly.
+  </Step>
+  <Step title="Drag and Drop">
+    **Click and drag** the desired agent(s) from the right side list onto the client's organization in the left side list.
+  </Step>
+</Steps>
+
+<Tip>
+  You can assign **multiple agents** to a single organization. This is useful for clients who need different chatbots for various purposes or departments.
+</Tip>
+
+
+## Configuring Organization Settings
+
+After creating an organization, you can customize various settings to tailor the experience for your clients:
+
+<Steps>
+  <Step title="Access Org Info">
+    Click `manage` on the organization you want to edit and then select the `Org Info` button.
+  </Step>
+  <Step title="Adjust Settings">
+    In the Org Info panel, you'll find several customization options:
+  </Step>
+</Steps>
+
+<AccordionGroup>
+  <Accordion title="Dashboard Language">
+    Select the language for the client dashboard interface using the dropdown menu. Languages supported use [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) list.
+    
+    <Tip>
+      The language setting affects onlye the dashboard, not the content of the chatbots or knowledge base.
+    </Tip>
+  </Accordion>
+  
+  <Accordion title="Dashboard Layout">
+    Choose between `Vertical` and `Horizontal` navigation layouts for the client dashboard.
+    
+  </Accordion>
+  
+  
+  <Accordion title="Handoff Settings">
+    **Configure how client-to-human handoffs are managed:**
+    
+    <CardGroup cols={2}>
+      <Card title="Enable human handoff" icon="user-headset">
+        Toggle this to allow users to request human assistance.
+      </Card>
+      <Card title="Smart Handoff" icon="brain">
+        When enabled, the AI will automatically detect when a user needs human assistance and initiate a handoff without requiring the user to click the handoff UI.
+      </Card>
+      <Card title="Disable Handoff Messages" icon="message-slash">
+        Hide messages that indicate when a human or AI is talking during handoffs.
+      </Card>
+    </CardGroup>
+  </Accordion>
+  
+  <Accordion title="Canned Responses">
+    Toggle `Enable Canned Responses` to allow the use of pre-written responses in client interactions.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+  Remember to click `Save & Close` after making changes to ensure all settings are applied to the organization.
+</Note>
+
+<img src="/images/org-info-settings.png" alt="Organization Info settings panel" />
+
+## Related Documentation
+
+Explore these related topics to further enhance your understanding of TIXAE Agent's whitelabel features:
+
+<CardGroup cols={2}>
+  <Card title="Creating Users" icon="user-plus" href="/whitelabeling/clients/creating-users">
+    Learn how to add and manage users within client organizations.
+  </Card>
+  <Card title="Setting Permissions" icon="lock" href="/whitelabeling/clients/setting-permissions">
+    Understand how to configure access levels for client users.
+  </Card>
+  <Card title="Client Dashboard Features" icon="gauge" href="/whitelabeling/clients/client-dashboard/features">
+    Explore the features available in the client-facing dashboard.
+  </Card>
+  <Card title="Inviting Clients" icon="envelope" href="/whitelabeling/clients/inviting-clients">
+    Master the process of onboarding clients to their new dashboard.
+  </Card>
+</CardGroup>

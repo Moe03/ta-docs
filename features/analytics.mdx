@@ -1,0 +1,142 @@
+---
+title: 'Analytics'
+description: ''
+icon: chart-line
+---
+
+
+The Analytics tab provides a powerful suite of tools to monitor and analyze your AI agent's performance. Whether you're fine-tuning your agent or reporting to clients, these insights will help you make data-driven decisions to enhance user experience and engagement.
+
+
+<img src="/images/analytics-overview-shots.png" alt="Total Conversations Graph" width="350" />
+
+
+
+<Tip>
+Access the Analytics tab for each agent to view detailed performance metrics and user interaction data.
+</Tip>
+
+## Key Metrics at a Glance
+
+<CardGroup cols={2}>
+  <Card title="Monthly Interactions" icon="calendar">
+    Track the number of interactions your agent handles based on time filtering.
+    <img src="/images/monthly-interactions.png" alt="Total Conversations Graph" width="550" />
+    <Check>Custom limit can be set in the agent settings tab</Check>
+  </Card>
+  <Card title="AI Tokens Usage" icon="coin">
+    Monitor the consumption of AI tokens to optimize costs and performance.
+    <img src="/images/total-usage.png" alt="Total Conversations Graph" width="550" />
+    <Check>Custom limit can be set in the agent settings tab</Check>
+  </Card>
+  <Card title="Total Interactions" icon="comments">
+    View the cumulative number of interactions over time.
+  </Card>
+  <Card title="Total Conversations" icon="messages">
+    Keep track of the number of distinct conversations initiated with your agent.
+  </Card>
+  <Card title="Average Messages per Chat" icon="comment-dots">
+    Understand the average length and depth of conversations with your agent.
+  </Card>
+  <Card title="Average Seconds per Chat" icon="clock">
+    Measure the efficiency of your agent by tracking the average duration of interactions.
+  </Card>
+</CardGroup>
+
+<Note>
+The **total interactions** and **total conversations** are displayed as key metrics at the top of the Analytics tab and as graphs based on your selected time range.
+</Note>
+
+## Detailed Performance Metrics
+
+<AccordionGroup>
+  <Accordion title="User Retention">
+    Visualize user engagement with a graph showing the total messages exchanged before users leave the conversation. Measured by date and amount of interactions.
+    
+   <img src="/images/user-retention.png" alt="Time Retention Graph" />
+  </Accordion>
+  <Accordion title="Time Retention">
+    Analyze user engagement duration with a graph displaying the total seconds users spend interacting with your agent. Measured by amount of users and time spent.
+     <img src="/images/total-retention.png" alt="User Retention Graph" />
+  </Accordion>
+  <Accordion title="Total conversations over time">
+    Analyze user conversations over time with your agent through a graph. Measure by amount of conversations and date based on your chosen time range.
+
+     
+     <img src="/images/total-conversations.png" alt="Total Conversations Graph" />
+  </Accordion>
+</AccordionGroup>
+
+## Geographic Insights
+
+Enable GeoAnalytics in the [settings](/agenct-creation/agent-settings) tab of your agent to gain insights into the geographical distribution of your users:
+
+<Info>
+GeoAnalytics is an `optional feature` that provides valuable location-based data about users interacting with your agent.
+</Info>
+
+<img src="/images/geo-analytics.png" alt="GeoAnalytics Map" />
+
+GeoAnalytics tracks unique website traffic, capturing all IPs that access your site. While it doesn't directly measure agent usage, it provides insights into the total number of visitors, with a percentage of these visitors likely engaging in conversations with your agent.
+
+<Accordion title="Unique traffic graph"><img src="/images/unique-traffic.png" alt="Unique traffic graph" width="700" />
+</Accordion>
+
+
+<Warning>
+Enabling **GeoAnalytics** incurs an additional credit cost of 0.1 per request on your website.
+</Warning>
+
+## Voiceflow-Specific Analytics
+
+If you're using our Voiceflow integration, you'll have access to additional analytics specific to the platform:
+
+<CardGroup cols={2}>
+  <Card title="Top Intents" icon="chart-pie">
+    Visualize the most frequently triggered intents in a pie chart. Hover over the specific pie pieces to see the intent name.
+    <img src="/images/top-intents.png" alt="Top Intents Pie Chart" />
+  </Card>
+  <Card title="Understood Messages" icon="comments-question-check">
+    See the percentage of messages successfully understood by your assistant. Green represents understood while red represents not understood messages by the voiceflow AI.
+    <img src="/images/understood-messages.png" alt="Understood Messages Pie Chart" />
+  </Card>
+</CardGroup>
+
+
+
+## Interpreting Your Analytics
+
+Understanding your analytics is crucial for optimizing your AI agent's performance and enhancing user experience. By regularly reviewing these metrics, you can gain valuable insights into how users interact with your agent, identify areas for improvement, and make data-driven decisions to increase efficiency and engagement.
+
+
+<Tip>
+Regular analysis of your analytics can help you:
+- Identify peak usage times
+- Understand user behavior
+- Optimize your agent's responses
+</Tip>
+
+
+### Tips to use the analytics efficiently:
+
+<Steps>
+  <Step title="Select Time Range" icon="calendar-days">
+    Use the time range filter to view data for specific periods:
+    <img src="/images/time-range-filter.png" alt="Time Range Filter" width="400" />
+  </Step>
+  <Step title="Compare Metrics" icon="chart-mixed">
+    Analyze trends by comparing different metrics side by side. This allows you to identify correlations and patterns across various performance indicators.
+  </Step>
+  <Step title="Monitor Trends" icon="chart-line">
+    Look for patterns in user interactions over time. This helps you understand peak usage times and general engagement patterns.
+  </Step>
+  <Step title="Optimize Performance" icon="gauge-high">
+    If average chat duration is high, consider ways to make your agent more efficient. This might involve refining responses or improving the knowledge base.
+  </Step>
+  <Step title="Enhance User Retention" icon="user-plus">
+    Analyze the user retention graph to see where users tend to drop off and improve those areas. This can help increase overall engagement and satisfaction.
+  </Step>
+  <Step title="Identify Areas for Improvement" icon="magnifying-glass-chart">
+    When using voiceflow, utilize metrics like "Understood Messages" to refine your agent's comprehension. Focus on improving areas where the agent struggles to understand user inputs.
+  </Step>
+</Steps>

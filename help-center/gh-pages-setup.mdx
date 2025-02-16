@@ -1,0 +1,108 @@
+---
+title: 'Setup Github Pages'
+description: 'Get free 100GB/month of bandwidth & avoid credits charge on visits.'
+icon: 'github'
+---
+
+#### Github Setup 
+![1](/images/ghpages-tut/1.PNG)
+- First of all you will head to https://github.com > create and account then head to this repo > https://github.com/Moe03/vg-hosting-template-v2 then fork it to your own github.
+---
+- Fork the Github repo
+![2](/images/ghpages-tut/2.PNG)
+> Fork the repo based on the **master** branch, as shown in the screenshot above.
+---
+- Setup Github Pages
+![3](/images/ghpages-tut/3.PNG)
+> Head to the settings tab of the repo you've forked, then scroll down to the Github Pages section.
+---
+![4](/images/ghpages-tut/4.PNG)
+> Select pages from the left menu.
+---
+![5](/images/ghpages-tut/5.PNG)
+> Select the **master** branch and the **root** directory, then press **save**.
+---
+![6](/images/ghpages-tut/6.PNG)
+> Once you've saved the settings it will take about a minute to build your github pages site, **you can also setup a custom domain if you want from this tab.**
+---
+![9](/images/ghpages-tut/9.PNG)
+> After a minute or so refresh the page then a new section should appear, press on **github pages** link to view your deployments and **get your domain**.
+---
+![10](/images/ghpages-tut/10.PNG)
+> This page above should appear and you should now copy that URL and also test it in your browser to see if it works.
+---
+![11](/images/ghpages-tut/11.PNG)
+> If this page shows up then **you've successfully setup your github pages site**, you can now use this link to host your TIXAE Agents agent or any other static site files as well.
+
+<Warning>
+    Github pages have a limit of 100GB/month of bandwidth, if you exceed this limit it will stop working, this is approximately about 100,000 visits per month.
+</Warning>
+Once you have github pages link you can now use it to host the script files as follows, in my case my github pages url is `https://moe03.github.io/vg-hosting-template-v2/assets/vg_live_build/` so I will use that in the next step.
+
+
+```js
+<div style="width: '500px'; height: '500px';" id="VG_OVERLAY_CONTAINER">
+<!-- Here is where TIXAE Agents renders the widget. -->
+<!-- Set width, height for 500px as an example after changing render to 'full-width' -->
+</div>
+
+<!-- Remove 'defer' if you want widget to load faster (Will affect website loading) -->
+<script defer>
+    (function() {
+        window.VG_CONFIG = {
+            ID: "28ya0mfr15fbyv3i", // REPLACE WITH YOUR AGENT ID
+            region: 'eu', // REPLACE WITH YOUR ACCOUNT REGION
+            render: 'bottom-right', // REPLACE WITH 'full-width' for full width widget or "bottom-left" to change postion
+            stylesheets: [
+                // Base TIXAE Agents CSS
+                "https://moe03.github.io/vg-hosting-template-v2/assets/vg_live_build/styles.css",
+                // Add your custom css stylesheets, Can also add relative URL ('/public/your-file.css)
+            ],
+            // Optional user data -- start
+            user: {
+                name: 'John Doe', // User's name
+                email: 'johndoe@gmail.com', // User's email
+                phone: '+1234567890', // User's phone number
+            }
+            // Optional user data -- end
+            // **
+            // userID: 'USER_ID', // If you want to use your own user_id
+            // autostart: true, // Whether to autostart the chatbot with the proactive message
+        }
+        var VG_SCRIPT = document.createElement("script");
+        VG_SCRIPT.src = "https://moe03.github.io/vg-hosting-template-v2/assets/vg_live_build/vg_bundle.js";
+        VG_SCRIPT.defer = true; // Remove 'defer' if you want widget to load faster (Will affect website loading)
+        document.body.appendChild(VG_SCRIPT);
+    })()
+</script>
+```
+<Note>
+You will need to append /assets/vg_live_build/ to the end of your github pages url to get the correct path for the script files.
+</Note>
+
+### Automatically update script files
+![12](/images/ghpages-tut/12.PNG)
+So far If you want to automatically update the script files on your github pages site you can continue this tutorial, if you want to manually update the script files you can through fetching latest version from the repo main page and this is the manual option.
+
+- Automatically update using github access token:
+![13](/images/ghpages-tut/13.PNG)
+> Head to your **github settings** 
+---
+![14](/images/ghpages-tut/14.PNG)
+> **developer settings** > scroll down > **Developer settings
+---
+![15](/images/ghpages-tut/15.PNG)
+> **personal access tokens** > generate new token 
+---
+![16](/images/ghpages-tut/16.PNG)
+> make sure your check the **repo** scope then generate the token, and if the repo is in an org make sure to check the **org** scope as well.
+---
+![17](/images/ghpages-tut/17.PNG)
+> Copy the token and save it somewhere safe, you will need it in the next step.
+---
+![18](/images/ghpages-tut/18.PNG)
+> Head to TIXAE Agents dashboard > **credentials tab with the key icon** > **Paste your github username and the token you've generated.**
+>> **Note that the username is your github username and if you're using an org repo it should be the org username.**
+---
+Once you've saved the credentials whenever we update the script files it will automatically be updated on your github pages site repo ✅
+
