@@ -266,7 +266,7 @@
                     },
                     "region": {
                         "enum": [
-                            "TIXAE Agents-eu",
+                            "Orova Agents-eu",
                             "(default)"
                         ],
                         "description": "AgentModel.region",
@@ -574,7 +574,7 @@
                     },
                     "region": {
                         "enum": [
-                            "TIXAE Agents-eu",
+                            "Orova Agents-eu",
                             "(default)"
                         ],
                         "description": "AgentModel.region",

@@ -1,12 +1,12 @@
 ---
 title: 'Voice Calls'
-description: 'Integrate TIXAE voice calls using the @tixae-labs/web-sdk package.'
+description: 'Integrate Orova voice calls using the @tixae-labs/web-sdk package.'
 icon: 'microphone'
 ---
 
 ## Overview
 
-The **@tixae-labs/web-sdk** package enables voice call functionality via WebRTC. It allows you to initialize a voice call session with an agent (identified by `agentId` and `region` from your [TIXAE Dashboard](https://tixaeagents.ai) and provides event listeners to track call status.
+The **@tixae-labs/web-sdk** package enables voice call functionality via WebRTC. It allows you to initialize a voice call session with an agent (identified by `agentId` and `region` from your [Orova Dashboard](https://tixaeagents.ai) and provides event listeners to track call status.
 
 
 ## Installation
@@ -40,7 +40,7 @@ const VoiceCallPage = () => {
     console.log("Starting voice call...");
 
     await voice.init({
-      agentId: "", // Replace with a valid agentId from your TIXAE Dashboard URL (e.g., "enit5lczmqbz1s7d")
+      agentId: "", // Replace with a valid agentId from your Orova Dashboard URL (e.g., "enit5lczmqbz1s7d")
       region: "",  // Replace with a valid region (e.g., "eu" or "na")
     });
 
