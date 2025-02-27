@@ -3621,7 +3621,7 @@
           "platformName": {
             "type": "string",
             "enum": ["vf", "vg"],
-            "description": "Name of the platform (virtual flow or TIXAE Agents)."
+            "description": "Name of the platform (virtual flow or Orova Agents)."
           },
           "chatState": {
             "type": "object",
@@ -3981,7 +3981,7 @@
           },
           "withVGBranding": {
             "type": "boolean",
-            "description": "Indicates if the agency has TIXAE Agents branding."
+            "description": "Indicates if the agency has Orova Agents branding."
           },
           "themeVariant": {
             "type": "string",
